@@ -13,8 +13,11 @@ class AttendanceTypeTest {
     @CsvSource({
             "2024-12-02T13:00, 출석",
             "2024-12-03T10:00, 출석",
+            "2024-12-03T10:05, 출석",
+            "2024-12-03T10:06, 지각",
             "2024-12-03T10:30, 지각",
-            "2024-12-03T13:00, 결석"
+            "2024-12-03T13:00, 결석",
+            "2024-12-03T09:54, 출석"
     })
     void determineAttendanceType(final LocalDateTime time, final String attendanceTypeName) {
         // Given
