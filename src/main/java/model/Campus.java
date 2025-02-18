@@ -3,6 +3,7 @@ package model;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import util.TimeFormatter;
 
 public class Campus {
@@ -16,14 +17,29 @@ public class Campus {
     }
 
     // 일자 - 주말 및 공휴일 제외
-    public void validateOperationTime(final LocalDateTime time) {
-        // 일자
+    public void validateOperationDateTime(final LocalDateTime time) {
+        validateOperationDate(time);
+        validateOperationTime(time);
+    }
+
+    private void validateOperationTime(final LocalDateTime localDateTime) {
+        LocalTime time = LocalTime.from(localDateTime);
+        LocalTime openTime = LocalTime.of(8, 0);
+        LocalTime closeTime = LocalTime.of(23, 0);
+        if (isNotOperationTime(time, closeTime, openTime)) {
+            throw new IllegalArgumentException("[ERROR] 캠퍼스 운영 시간이 아닙니다.");
+        }
+    }
+
+    private static boolean isNotOperationTime(LocalTime time, LocalTime closeTime, LocalTime openTime) {
+        return time.isAfter(closeTime) || time.isBefore(openTime);
+    }
+
+    private void validateOperationDate(final LocalDateTime time) {
         DayOfWeek dayOfWeek = time.getDayOfWeek();
         if (isWeekend(dayOfWeek) || isHoliday(LocalDate.from(time))) {
             throw new IllegalArgumentException("[ERROR] " + timeFormatter.formatDate(time) + "은 등교일이 아닙니다.");
         }
-        // 시간
-
     }
 
     private boolean isWeekend(final DayOfWeek dayOfWeek) {

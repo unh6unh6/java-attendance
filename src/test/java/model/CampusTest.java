@@ -24,7 +24,7 @@ public class CampusTest {
 
         // When & Then
         Assertions.assertThatCode(() -> {
-            campus.validateOperationTime(time);
+            campus.validateOperationDateTime(time);
         }).doesNotThrowAnyException();
     }
 
@@ -40,10 +40,25 @@ public class CampusTest {
         Campus campus = new Campus(new TimeFormatter());
 
         // When & Then
-        assertThatThrownBy(() -> campus.validateOperationTime(time))
+        assertThatThrownBy(() -> campus.validateOperationDateTime(time))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContainingAll("[ERROR]", "등교일이 아닙니다.");
     }
 
     // 날짜 O -> 운영 시간
+    @DisplayName("운영일이나 운영 시간이 아니라면 예외가 발생한다")
+    @ParameterizedTest
+    @CsvSource({
+            "2024-12-03T07:59",
+            "2024-12-03T23:01"
+    })
+    void notOperationTimeTest(final LocalDateTime time) {
+        // Given
+        Campus campus = new Campus(new TimeFormatter());
+
+        // When & Then
+        assertThatThrownBy(() -> campus.validateOperationDateTime(time))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContainingAll("[ERROR] 캠퍼스 운영 시간이 아닙니다.");
+    }
 }
