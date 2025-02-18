@@ -44,4 +44,6 @@ public class CrewTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 이미 출석했습니다. 수정 기능을 이용해주세요.");
     }
+
+    
 }
