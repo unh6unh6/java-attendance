@@ -1,6 +1,9 @@
 package controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import model.AttendanceType;
 import util.StringParser;
 import view.InputView;
 import view.ResultView;
@@ -22,8 +25,7 @@ public class AttendanceController {
         String nickname = inputView.readNickname();
         String attendanceTimeInput = inputView.readAttendanceTime();
         LocalTime attendanceTime = stringParser.parseLocalTime(attendanceTimeInput);
-
-        // TODO : null 대신 AttendanceType 계산한 enum 넣기
-        resultView.printAttendanceHistory(attendanceTimeInput, null);
+        LocalDateTime localDateTime = LocalDateTime.of(LocalDate.now(), attendanceTime);
+        resultView.printAttendanceHistory(attendanceTimeInput, AttendanceType.from(localDateTime));
     }
 }
