@@ -5,6 +5,12 @@ import java.util.Scanner;
 public class InputView {
     private static final String NICKNAME_INPUT_GUIDE = "닉네임을 입력해 주세요.";
 
+    private final InputValidator inputValidator;
+
+    public InputView(final InputValidator inputValidator) {
+        this.inputValidator = inputValidator;
+    }
+
     public String readNickname() {
         String nickname = readInput();
         System.out.println(NICKNAME_INPUT_GUIDE);
@@ -19,6 +25,8 @@ public class InputView {
 
     private String readInput() {
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+        String input = scanner.nextLine();
+        inputValidator.validateIsNullOrEmpty(input);
+        return input;
     }
 }
