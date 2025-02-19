@@ -2,6 +2,7 @@ package util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,10 +23,10 @@ class TimeFormatterTest {
     @Test
     void localDateFormatTest() {
         // Given
-        LocalDateTime localDateTime = LocalDateTime.of(2024, 12, 3, 9, 55);
+        LocalDate localDate = LocalDate.of(2024, 12, 3);
 
         // When & Then
-        assertThat(TimeFormatter.formatDate(localDateTime)).isEqualTo("12월 03일 화요일");
+        assertThat(TimeFormatter.formatDate(localDate)).isEqualTo("12월 03일 화요일");
     }
 
 }

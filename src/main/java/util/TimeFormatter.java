@@ -1,5 +1,6 @@
 package util;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -12,8 +13,8 @@ public class TimeFormatter {
         return localDateTime.format(dateTimeFormatter);
     }
 
-    public static String formatDate(final LocalDateTime localDateTime) {
-        return localDateTime.format(dateFormatter);
+    public static String formatDate(final LocalDate localDate) {
+        return localDate.format(dateFormatter);
     }
 
 }
