@@ -10,13 +10,6 @@ public class Campus {
 
     private static final int CHRISTMAS_DAY = 25;
 
-    private final TimeFormatter timeFormatter;
-
-    public Campus(final TimeFormatter timeFormatter) {
-        this.timeFormatter = timeFormatter;
-    }
-
-    // 일자 - 주말 및 공휴일 제외
     public void validateOperationDateTime(final LocalDateTime time) {
         validateOperationDate(time);
         validateOperationTime(time);
@@ -38,7 +31,7 @@ public class Campus {
     private void validateOperationDate(final LocalDateTime time) {
         DayOfWeek dayOfWeek = time.getDayOfWeek();
         if (isWeekend(dayOfWeek) || isHoliday(LocalDate.from(time))) {
-            throw new IllegalArgumentException("[ERROR] " + timeFormatter.formatDate(time) + "은 등교일이 아닙니다.");
+            throw new IllegalArgumentException("[ERROR] " + TimeFormatter.formatDate(time) + "은 등교일이 아닙니다.");
         }
     }
 
@@ -49,6 +42,5 @@ public class Campus {
     private boolean isHoliday(final LocalDate date) {
         return date.getDayOfMonth() == CHRISTMAS_DAY;
     }
-
 
 }

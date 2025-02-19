@@ -7,7 +7,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import util.TimeFormatter;
 
 public class CampusTest {
 
@@ -20,7 +19,7 @@ public class CampusTest {
     })
     void operationTimeTest(final LocalDateTime time) {
         // Given
-        Campus campus = new Campus(new TimeFormatter());
+        Campus campus = new Campus();
 
         // When & Then
         Assertions.assertThatCode(() -> {
@@ -37,7 +36,7 @@ public class CampusTest {
     })
     void notOperationDateTest(final LocalDateTime time) {
         // Given
-        Campus campus = new Campus(new TimeFormatter());
+        Campus campus = new Campus();
 
         // When & Then
         assertThatThrownBy(() -> campus.validateOperationDateTime(time))
@@ -54,7 +53,7 @@ public class CampusTest {
     })
     void notOperationTimeTest(final LocalDateTime time) {
         // Given
-        Campus campus = new Campus(new TimeFormatter());
+        Campus campus = new Campus();
 
         // When & Then
         assertThatThrownBy(() -> campus.validateOperationDateTime(time))
