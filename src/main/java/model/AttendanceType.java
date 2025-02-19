@@ -14,7 +14,7 @@ public enum AttendanceType {
     지각(Duration.ofMinutes(5)),
     결석(Duration.ofMinutes(30));
 
-    public static final LocalTime INITIAL_TIME = LocalTime.MIN;
+    public static final LocalTime DEFAULT_TIME = LocalTime.MIN;
 
     AttendanceType(Duration threshold) {
         this.threshold = threshold;
@@ -25,7 +25,7 @@ public enum AttendanceType {
     public static AttendanceType from(final LocalDateTime attendanceDateTime) {
         LocalTime startTime = getStartTime(attendanceDateTime.getDayOfWeek());
         LocalTime attendanceTime = LocalTime.from(attendanceDateTime);
-        if (attendanceTime.equals(INITIAL_TIME) || attendanceTime.isAfter(startTime.plus(결석.threshold))) {
+        if (attendanceTime.equals(DEFAULT_TIME) || attendanceTime.isAfter(startTime.plus(결석.threshold))) {
             return 결석;
         }
         if (attendanceTime.isAfter(startTime.plus(지각.threshold))) {

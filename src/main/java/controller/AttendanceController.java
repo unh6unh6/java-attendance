@@ -3,10 +3,13 @@ package controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.Map;
 import model.AttendanceType;
 import model.Campus;
 import model.Crew;
 import model.Crews;
+import model.SubjectType;
 import util.StringParser;
 import util.TimeFormatter;
 import view.InputView;
@@ -30,6 +33,7 @@ public class AttendanceController {
     public void start(final Crews crews) {
         checkAttendance(crews);
         modifyAttendance(crews);
+        checkAttendanceHistoryByCrew(crews);
     }
 
     private void checkAttendance(final Crews crews) {
@@ -71,6 +75,17 @@ public class AttendanceController {
                 TimeFormatter.formatTime(modifyTime),
                 AttendanceType.from(modifyDateTime)
         );
+    }
+
+    private void checkAttendanceHistoryByCrew(final Crews crews) {
+        String nickname = inputView.readNickname();
+        Crew crew = crews.findCrewByNickname(nickname);
+
+        List<LocalDateTime> attendanceHistory = crew.getAttendanceHistory(getTodayDate());
+        Map<AttendanceType, Integer> result = AttendanceType.countAttendanceType(attendanceHistory);
+        SubjectType subjectType = SubjectType.from(result);
+
+        resultView.printAttendanceHistoryResultByCrew(nickname, attendanceHistory, result, subjectType);
     }
 
     private LocalDate getTodayDate() {

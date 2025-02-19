@@ -1,7 +1,7 @@
 package model;
 
 import static java.util.Map.entry;
-import static model.AttendanceType.INITIAL_TIME;
+import static model.AttendanceType.DEFAULT_TIME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
@@ -44,7 +44,7 @@ class AttendanceTypeTest {
                 LocalDateTime.of(2024, 12, 2, 9, 0),
                 LocalDateTime.of(2024, 12, 3, 10, 6),
                 LocalDateTime.of(2024, 12, 4, 10, 31),
-                LocalDateTime.of(LocalDate.of(2024, 12, 5), INITIAL_TIME),
+                LocalDateTime.of(LocalDate.of(2024, 12, 5), DEFAULT_TIME),
                 LocalDateTime.of(2024, 12, 6, 9, 30)
         );
 
