@@ -10,13 +10,10 @@ import java.util.stream.IntStream;
 
 public class Crew {
 
-    private final Map<Integer, LocalDateTime> attendance = new HashMap<>();
+    private final Map<Integer, LocalDateTime> attendance;
 
-    public Crew() {
-    }
-
-    public Map<Integer, LocalDateTime> getAttendance() {
-        return Collections.unmodifiableMap(attendance);
+    public Crew(final Map<Integer, LocalDateTime> attendance) {
+        this.attendance = new HashMap<>(attendance);
     }
 
     public void doAttendance(final LocalDateTime attendanceTime) {
@@ -45,5 +42,9 @@ public class Crew {
                 .filter(day -> day < today)
                 .mapToObj(attendance::get)
                 .toList();
+    }
+
+    public Map<Integer, LocalDateTime> getAttendance() {
+        return Collections.unmodifiableMap(attendance);
     }
 }

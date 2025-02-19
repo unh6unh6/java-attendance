@@ -6,7 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +20,7 @@ public class CrewTest {
     @Test
     void checkAttendanceTest() {
         // Given
-        Crew crew = new Crew();
+        Crew crew = new Crew(new HashMap<>());
         LocalDateTime attendanceTime = LocalDateTime.of(2024, 12, 3, 9, 0);
 
         // When
@@ -32,7 +34,7 @@ public class CrewTest {
     @Test
     void alreadyAttendanceTest() {
         // Given
-        Crew crew = new Crew();
+        Crew crew = new Crew(new HashMap<>());
         LocalDateTime attendanceTime = LocalDateTime.of(2024, 12, 3, 9, 0);
         crew.doAttendance(attendanceTime);
 
@@ -47,7 +49,7 @@ public class CrewTest {
     @Test
     void modifyAttendanceTest() {
         // Given
-        Crew crew = new Crew();
+        Crew crew = new Crew(new HashMap<>());
         LocalDateTime attendanceTime = LocalDateTime.of(2024, 12, 3, 9, 0);
         crew.doAttendance(attendanceTime);
 
@@ -72,7 +74,7 @@ public class CrewTest {
     })
     void invalidModifyDateTest(LocalDate todayDate) {
         // Given
-        Crew crew = new Crew();
+        Crew crew = new Crew(new HashMap<>());
         LocalDateTime modifyTime = LocalDateTime.of(2024, 12, 4, 9, 50);
 
         // When & Then
@@ -86,21 +88,16 @@ public class CrewTest {
     void checkAttendanceHistoryByCrewTest() {
         // Given
         LocalDate today = LocalDate.of(2024, 12, 19);
-        Crew crew = new Crew();
 
         LocalDateTime dateTime1 = LocalDateTime.of(2024, 12, 3, 9, 0);
         LocalDateTime dateTime2 = LocalDateTime.of(2024, 12, 4, 9, 0);
         LocalDateTime todayDateTime = LocalDateTime.of(2024, 12, 19, 9, 0);
-
-        crew.doAttendance(dateTime1);
-        crew.doAttendance(dateTime2);
-        crew.doAttendance(todayDateTime);
+        Crew crew = new Crew(Map.of(3, dateTime1, 12, dateTime2, 19, todayDateTime));
 
         // When
         List<LocalDateTime> attendanceHistory = crew.getAttendanceHistory(today);
 
         // Then
-        assertThat(attendanceHistory).containsOnly(dateTime1, dateTime2);
+        assertThat(attendanceHistory).contains(dateTime1, dateTime2);
     }
-
 }
