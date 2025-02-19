@@ -1,11 +1,12 @@
 package model;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,7 +32,7 @@ public class CrewTest {
         crew.doAttendance(attendanceTime);
 
         // Then
-        Assertions.assertThat(crew.getAttendance()).containsEntry(3, attendanceTime);
+        assertThat(crew.getAttendance()).containsEntry(3, attendanceTime);
     }
 
     @DisplayName("이미 출석한 경우 예외가 발생한다")
@@ -49,19 +50,25 @@ public class CrewTest {
     }
 
 
-    @DisplayName("출석을 수정한다")
+    @DisplayName("출석을 수정하고 이전의 출석 기록을 반환한다")
     @Test
     void modifyAttendanceTest() {
         // Given
         Crew crew = new Crew("밍트");
+        LocalDateTime attendanceTime = LocalDateTime.of(2024, 12, 3, 9, 0);
+        crew.doAttendance(attendanceTime);
+
         LocalDateTime modifyTime = LocalDateTime.of(2024, 12, 3, 9, 50);
         LocalDate todayDate = LocalDate.now();
 
         // When
-        crew.doModify(modifyTime, todayDate);
+        LocalDateTime previousDateTime = crew.doModify(modifyTime, todayDate);
 
         // Then
-        Assertions.assertThat(crew.getAttendance()).containsEntry(3, modifyTime);
+        assertAll(
+                () -> assertThat(crew.getAttendance()).containsEntry(3, modifyTime),
+                () -> assertThat(previousDateTime).isEqualTo(attendanceTime)
+        );
     }
 
     @DisplayName("오늘 또는 미래의 수정 일자일 경우 예외가 발생한다")
