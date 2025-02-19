@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class Crew {
 
@@ -37,5 +39,14 @@ public class Crew {
         LocalDateTime previousTime = attendance.get(modifyDay);
         attendance.put(modifyDay, modifyDateTime);
         return previousTime;
+    }
+
+    public List<LocalDateTime> getAttendanceHistory(final LocalDate todayDate) {
+        int today = todayDate.getDayOfMonth();
+        return IntStream.rangeClosed(1, 31)
+                .filter(attendance::containsKey)
+                .filter(day -> day < today)
+                .mapToObj(attendance::get)
+                .toList();
     }
 }

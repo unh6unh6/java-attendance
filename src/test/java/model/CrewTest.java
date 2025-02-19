@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -87,4 +88,27 @@ public class CrewTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 수정 일자는 어제 기록까지만 수정할 수 있습니다.");
     }
+
+    @DisplayName("크루별 출석 기록을 확인한다")
+    @Test
+    void checkAttendanceHistoryByCrewTest() {
+        // Given
+        LocalDate today = LocalDate.of(2024, 12, 19);
+        Crew crew = new Crew("밍트");
+
+        LocalDateTime dateTime1 = LocalDateTime.of(2024, 12, 3, 9, 0);
+        LocalDateTime dateTime2 = LocalDateTime.of(2024, 12, 4, 9, 0);
+        LocalDateTime todayDateTime = LocalDateTime.of(2024, 12, 19, 9, 0);
+
+        crew.doAttendance(dateTime1);
+        crew.doAttendance(dateTime2);
+        crew.doAttendance(todayDateTime);
+
+        // When
+        List<LocalDateTime> attendanceHistory = crew.getAttendanceHistory(today);
+
+        // Then
+        assertThat(attendanceHistory).containsOnly(dateTime1, dateTime2);
+    }
+
 }
