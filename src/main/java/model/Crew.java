@@ -26,4 +26,8 @@ public class Crew {
         }
         attendance.put(day, attendanceTime);
     }
+
+    public void doModify(final LocalDateTime modifyDateTime) {
+        attendance.put(modifyDateTime.getDayOfMonth(), modifyDateTime);
+    }
 }

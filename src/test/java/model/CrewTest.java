@@ -19,7 +19,7 @@ public class CrewTest {
 
     @DisplayName("출석을 한다")
     @Test
-    void doAttendance() {
+    void checkAttendanceTest() {
         // Given
         Crew crew = new Crew("밍트");
         LocalDateTime attendanceTime = LocalDateTime.of(2024, 12, 3, 9, 0);
@@ -45,5 +45,18 @@ public class CrewTest {
                 .hasMessageContaining("[ERROR] 이미 출석했습니다. 수정 기능을 이용해주세요.");
     }
 
-    
+
+    @DisplayName("출석을 수정한다")
+    @Test
+    void modifyAttendanceTest() {
+        // Given
+        Crew crew = new Crew("밍트");
+        LocalDateTime modifyTime = LocalDateTime.of(2024, 12, 3, 9, 50);
+
+        // When
+        crew.doModify(modifyTime);
+
+        // Then
+        Assertions.assertThat(crew.getAttendance()).containsEntry(3, modifyTime);
+    }
 }
