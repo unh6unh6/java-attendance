@@ -2,6 +2,7 @@ package util;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,7 +57,7 @@ class StringParserTest {
         Assertions.assertThat(parsedInt).isEqualTo(11);
     }
 
-    @DisplayName("정수 문자열이 아니라면 예외가 반환한다")
+    @DisplayName("정수 문자열이 아니라면 예외가 발생한다")
     @Test
     void invalidIntFormatTest() {
         // Given
@@ -67,4 +68,30 @@ class StringParserTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 정수 문자열이여야합니다.");
     }
+
+    @DisplayName("12월 일자 문자열로 받아서 LocalDate로 변환한다")
+    @Test
+    void parseLocalDateTest() {
+        // Given
+        final String input = "11";
+
+        // When
+        LocalDate localDate = stringParser.parseLocalDate(input);
+
+        // Then
+        Assertions.assertThat(localDate).isEqualTo(LocalDate.of(2024, 12, 11));
+    }
+
+    @DisplayName("유효하지 않은 12월 일자 문자열이라면 예외가 발생한다")
+    @Test
+    void invalidLocalDateFormatTest() {
+        // Given
+        final String input = "40";
+
+        // When & Then
+        Assertions.assertThatThrownBy(() -> stringParser.parseLocalDate(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 유효한 일자이여야합니다.");
+    }
+
 }
