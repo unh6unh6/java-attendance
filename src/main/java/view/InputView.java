@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class InputView {
     private static final String NICKNAME_INPUT_GUIDE = "닉네임을 입력해 주세요.";
+    private static final String ATTENDANCE_TIME_INPUT_GUIDE = "등교 시간을 입력해 주세요.";
 
     private final InputValidator inputValidator;
 
@@ -12,15 +13,13 @@ public class InputView {
     }
 
     public String readNickname() {
-        String nickname = readInput();
         System.out.println(NICKNAME_INPUT_GUIDE);
-        return nickname;
+        return readInput();
     }
 
     public String readAttendanceTime() {
-        String attendanceTime = readInput();
-        System.out.println(NICKNAME_INPUT_GUIDE);
-        return attendanceTime;
+        System.out.println(ATTENDANCE_TIME_INPUT_GUIDE);
+        return readInput();
     }
 
     private String readInput() {
