@@ -10,12 +10,7 @@ public class Campus {
 
     private static final int CHRISTMAS_DAY = 25;
 
-    public void validateOperationDateTime(final LocalDateTime time) {
-        validateOperationDate(time);
-        validateOperationTime(time);
-    }
-
-    private void validateOperationTime(final LocalDateTime localDateTime) {
+    public void validateOperationTime(final LocalDateTime localDateTime) {
         LocalTime time = LocalTime.from(localDateTime);
         LocalTime openTime = LocalTime.of(8, 0);
         LocalTime closeTime = LocalTime.of(23, 0);
@@ -24,15 +19,15 @@ public class Campus {
         }
     }
 
-    private static boolean isNotOperationTime(LocalTime time, LocalTime closeTime, LocalTime openTime) {
-        return time.isAfter(closeTime) || time.isBefore(openTime);
+    public void validateOperationDate(final LocalDate date) {
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        if (isWeekend(dayOfWeek) || isHoliday(date)) {
+            throw new IllegalArgumentException("[ERROR] " + TimeFormatter.formatDate(date) + "은 등교일이 아닙니다.");
+        }
     }
 
-    private void validateOperationDate(final LocalDateTime time) {
-        DayOfWeek dayOfWeek = time.getDayOfWeek();
-        if (isWeekend(dayOfWeek) || isHoliday(LocalDate.from(time))) {
-            throw new IllegalArgumentException("[ERROR] " + TimeFormatter.formatDate(time) + "은 등교일이 아닙니다.");
-        }
+    private static boolean isNotOperationTime(LocalTime time, LocalTime closeTime, LocalTime openTime) {
+        return time.isAfter(closeTime) || time.isBefore(openTime);
     }
 
     private boolean isWeekend(final DayOfWeek dayOfWeek) {
