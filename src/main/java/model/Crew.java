@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,7 +28,11 @@ public class Crew {
         attendance.put(day, attendanceTime);
     }
 
-    public void doModify(final LocalDateTime modifyDateTime) {
+    public void doModify(final LocalDateTime modifyDateTime, final LocalDate todayDate) {
+        LocalDate modifyDate = LocalDate.from(modifyDateTime);
+        if (modifyDate.isEqual(todayDate) || modifyDate.isAfter(todayDate)) {
+            throw new IllegalArgumentException("[ERROR] 수정 일자는 어제 기록까지만 수정할 수 있습니다.");
+        }
         attendance.put(modifyDateTime.getDayOfMonth(), modifyDateTime);
     }
 }

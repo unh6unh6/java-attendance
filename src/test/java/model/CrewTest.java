@@ -3,10 +3,13 @@ package model;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class CrewTest {
 
@@ -52,11 +55,29 @@ public class CrewTest {
         // Given
         Crew crew = new Crew("밍트");
         LocalDateTime modifyTime = LocalDateTime.of(2024, 12, 3, 9, 50);
+        LocalDate todayDate = LocalDate.now();
 
         // When
-        crew.doModify(modifyTime);
+        crew.doModify(modifyTime, todayDate);
 
         // Then
         Assertions.assertThat(crew.getAttendance()).containsEntry(3, modifyTime);
+    }
+
+    @DisplayName("오늘 또는 미래의 수정 일자일 경우 예외가 발생한다")
+    @ParameterizedTest
+    @CsvSource({
+            "2024-12-03",
+            "2024-12-04"
+    })
+    void invalidModifyDateTest(LocalDate todayDate) {
+        // Given
+        Crew crew = new Crew("밍트");
+        LocalDateTime modifyTime = LocalDateTime.of(2024, 12, 4, 9, 50);
+
+        // When & Then
+        assertThatThrownBy(() -> crew.doModify(modifyTime, todayDate))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 수정 일자는 어제 기록까지만 수정할 수 있습니다.");
     }
 }
