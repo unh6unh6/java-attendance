@@ -10,12 +10,9 @@ import java.util.stream.IntStream;
 
 public class Crew {
 
-    private final String nickname;
-
     private final Map<Integer, LocalDateTime> attendance = new HashMap<>();
 
-    public Crew(final String nickname) {
-        this.nickname = nickname;
+    public Crew() {
     }
 
     public Map<Integer, LocalDateTime> getAttendance() {

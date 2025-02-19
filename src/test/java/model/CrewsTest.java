@@ -12,8 +12,8 @@ public class CrewsTest {
     @DisplayName("크루 이름으로 크루를 조회한다")
     @Test
     void findCrewsTest() {
-        Crew crew1 = new Crew("호떡");
-        Crew crew2 = new Crew("밍트");
+        Crew crew1 = new Crew();
+        Crew crew2 = new Crew();
         // Given
         Crews crews = new Crews(
                 Map.of("호떡", crew1, "밍트", crew2)
@@ -26,8 +26,8 @@ public class CrewsTest {
     @DisplayName("크루가 존재하지 않는다면 예외를 발생시킨다")
     @Test
     void crewNotExistTest() {
-        Crew crew1 = new Crew("호떡");
-        Crew crew2 = new Crew("밍트");
+        Crew crew1 = new Crew();
+        Crew crew2 = new Crew();
         // Given
         Crews crews = new Crews(
                 Map.of("호떡", crew1, "밍트", crew2)

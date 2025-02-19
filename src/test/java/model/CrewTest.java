@@ -1,7 +1,6 @@
 package model;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -15,18 +14,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public class CrewTest {
 
-    @DisplayName("크루 닉네임을 통해 크루를 생성한다")
-    @Test
-    void createCrewTest() {
-        assertThatCode(() -> new Crew("호떡"))
-                .doesNotThrowAnyException();
-    }
-
     @DisplayName("출석을 한다")
     @Test
     void checkAttendanceTest() {
         // Given
-        Crew crew = new Crew("밍트");
+        Crew crew = new Crew();
         LocalDateTime attendanceTime = LocalDateTime.of(2024, 12, 3, 9, 0);
 
         // When
@@ -40,7 +32,7 @@ public class CrewTest {
     @Test
     void alreadyAttendanceTest() {
         // Given
-        Crew crew = new Crew("밍트");
+        Crew crew = new Crew();
         LocalDateTime attendanceTime = LocalDateTime.of(2024, 12, 3, 9, 0);
         crew.doAttendance(attendanceTime);
 
@@ -55,7 +47,7 @@ public class CrewTest {
     @Test
     void modifyAttendanceTest() {
         // Given
-        Crew crew = new Crew("밍트");
+        Crew crew = new Crew();
         LocalDateTime attendanceTime = LocalDateTime.of(2024, 12, 3, 9, 0);
         crew.doAttendance(attendanceTime);
 
@@ -80,7 +72,7 @@ public class CrewTest {
     })
     void invalidModifyDateTest(LocalDate todayDate) {
         // Given
-        Crew crew = new Crew("밍트");
+        Crew crew = new Crew();
         LocalDateTime modifyTime = LocalDateTime.of(2024, 12, 4, 9, 50);
 
         // When & Then
@@ -94,7 +86,7 @@ public class CrewTest {
     void checkAttendanceHistoryByCrewTest() {
         // Given
         LocalDate today = LocalDate.of(2024, 12, 19);
-        Crew crew = new Crew("밍트");
+        Crew crew = new Crew();
 
         LocalDateTime dateTime1 = LocalDateTime.of(2024, 12, 3, 9, 0);
         LocalDateTime dateTime2 = LocalDateTime.of(2024, 12, 4, 9, 0);
