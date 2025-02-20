@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import model.AttendanceType;
 import model.Campus;
+import model.Command;
 import model.Crew;
 import model.Crews;
 import model.SubjectType;
@@ -30,10 +31,27 @@ public class AttendanceController {
     }
 
     public void start(final Crews crews) {
-        checkAttendance(crews);
-        modifyAttendance(crews);
-        checkAttendanceHistoryByCrew(crews);
-        checkDismissalCrews(crews);
+        Command command = Command.from(inputView.readCommand(getTodayDate()));
+        if (command.equals(Command.QUIT)) {
+            return;
+        }
+        process(crews, command);
+        start(crews);
+    }
+
+    private void process(final Crews crews, final Command command) {
+        if (command.equals(Command.CHECK_ATTENDANCE)) {
+            checkAttendance(crews);
+        }
+        if (command.equals(Command.MODIFY_ATTENDANCE)) {
+            modifyAttendance(crews);
+        }
+        if (command.equals(Command.CHECK_ATTENDANCE_BY_CREW)) {
+            checkAttendanceHistoryByCrew(crews);
+        }
+        if (command.equals(Command.CHECK_DISMISSAL_CREW)) {
+            checkDismissalCrews(crews);
+        }
     }
 
     private void checkAttendance(final Crews crews) {
@@ -95,7 +113,7 @@ public class AttendanceController {
     }
 
     public static LocalDate getTodayDate() {
-        return LocalDate.of(2024, 12, 19);
+        return LocalDate.of(2024, 12, 16);
         //return LocalDate.now();
     }
 }
