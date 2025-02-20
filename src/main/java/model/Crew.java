@@ -44,6 +44,11 @@ public class Crew {
                 .toList();
     }
 
+    public void loadAttendanceHistory(final LocalDateTime attendanceTime) {
+        int day = attendanceTime.getDayOfMonth();
+        attendance.put(day, attendanceTime);
+    }
+
     public Map<Integer, LocalDateTime> getAttendance() {
         return Collections.unmodifiableMap(attendance);
     }

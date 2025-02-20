@@ -1,8 +1,10 @@
 package controller;
 
+import dto.DismissalCrewDto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import model.AttendanceType;
@@ -19,14 +21,11 @@ public class AttendanceController {
 
     private final InputView inputView;
     private final ResultView resultView;
-    private final StringParser stringParser;
     private final Campus campus;
 
-    public AttendanceController(final InputView inputView, final ResultView resultView,
-                                final StringParser stringParser, final Campus campus) {
+    public AttendanceController(final InputView inputView, final ResultView resultView, final Campus campus) {
         this.inputView = inputView;
         this.resultView = resultView;
-        this.stringParser = stringParser;
         this.campus = campus;
     }
 
@@ -34,6 +33,7 @@ public class AttendanceController {
         checkAttendance(crews);
         modifyAttendance(crews);
         checkAttendanceHistoryByCrew(crews);
+        checkDismissalCrews(crews);
     }
 
     private void checkAttendance(final Crews crews) {
@@ -41,7 +41,7 @@ public class AttendanceController {
         Crew crew = crews.findCrewByNickname(nickname);
 
         String attendanceTimeInput = inputView.readAttendanceTime();
-        LocalTime attendanceTime = stringParser.parseLocalTime(attendanceTimeInput);
+        LocalTime attendanceTime = StringParser.parseLocalTime(attendanceTimeInput);
         LocalDateTime attendanceDateTime = LocalDateTime.of(getTodayDate(), attendanceTime);
 
         campus.validateOperationDate(LocalDate.from(attendanceDateTime));
@@ -60,11 +60,11 @@ public class AttendanceController {
         Crew crew = crews.findCrewByNickname(nickname);
 
         String dayInput = inputView.readModifyDay();
-        LocalDate modifyDate = stringParser.parseLocalDate(dayInput);
+        LocalDate modifyDate = StringParser.parseLocalDate(dayInput);
         campus.validateOperationDate(modifyDate);
 
         String timeInput = inputView.readModifyTime();
-        LocalTime modifyTime = stringParser.parseLocalTime(timeInput);
+        LocalTime modifyTime = StringParser.parseLocalTime(timeInput);
         LocalDateTime modifyDateTime = LocalDateTime.of(modifyDate, modifyTime);
         campus.validateOperationTime(modifyDateTime);
 
@@ -88,7 +88,13 @@ public class AttendanceController {
         resultView.printAttendanceHistoryResultByCrew(nickname, attendanceHistory, result, subjectType);
     }
 
-    private LocalDate getTodayDate() {
+    private void checkDismissalCrews(final Crews crews) {
+        List<DismissalCrewDto> dtos = crews.findDismissalCrewDtos(getTodayDate());
+        Collections.sort(dtos);
+        resultView.printDismissalResult(dtos);
+    }
+
+    public static LocalDate getTodayDate() {
         return LocalDate.of(2024, 12, 19);
         //return LocalDate.now();
     }

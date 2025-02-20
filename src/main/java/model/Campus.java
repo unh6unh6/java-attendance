@@ -20,10 +20,14 @@ public class Campus {
     }
 
     public void validateOperationDate(final LocalDate date) {
-        DayOfWeek dayOfWeek = date.getDayOfWeek();
-        if (isWeekend(dayOfWeek) || isHoliday(date)) {
+        if (isNotOperationDate(date)) {
             throw new IllegalArgumentException("[ERROR] " + TimeFormatter.formatDate(date) + "은 등교일이 아닙니다.");
         }
+    }
+
+    public boolean isNotOperationDate(final LocalDate date) {
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        return isWeekend(dayOfWeek) || isHoliday(date);
     }
 
     private static boolean isNotOperationTime(LocalTime time, LocalTime closeTime, LocalTime openTime) {
