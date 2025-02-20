@@ -29,7 +29,9 @@ public class InputView {
 
     public String readCommand(final LocalDate todayDate) {
         System.out.printf(LINE + TITLE_ATTENDANCE_FORM, TimeFormatter.formatDate(todayDate));
-        return readInput();
+        String input = readInput();
+        System.out.println();
+        return input;
     }
 
     public String readNickname() {
