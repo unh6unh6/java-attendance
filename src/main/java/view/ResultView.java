@@ -2,7 +2,9 @@ package view;
 
 import static model.AttendanceType.DEFAULT_TIME;
 
+import dto.DismissalCrewDto;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import model.AttendanceType;
@@ -11,7 +13,7 @@ import util.TimeFormatter;
 
 public class ResultView {
 
-    public static final String LINE = System.lineSeparator();
+    private static final String LINE = System.lineSeparator();
     private static final String ATTENDANCE_HISTORY_FORM = "%s (%s)";
     private static final String MODIFY_HISTORY_FORM = "%s (%s) -> %s (%s) 수정 완료!";
     private static final String ATTENDANCE_HISTORY_BY_CREW_FORM = "이번 달 %s의 출석 기록입니다.";
@@ -22,6 +24,8 @@ public class ResultView {
             결석: %d회
             """;
     private static final String SUBJECT_TYPE_FORM = "%s 대상자입니다.";
+    private static final String DISMISSAL_RESULT_TITLE = "제적 위험자 조회 결과";
+    private static final String DISMISSAL_RESULT_FORM = "- %s: 결석 %d회, 지각 %d회 (%s)";
 
     public void printAttendanceHistory(final String attendanceTime, final AttendanceType attendanceType) {
         System.out.printf(ATTENDANCE_HISTORY_FORM + LINE, attendanceTime, attendanceType.name());
@@ -45,6 +49,14 @@ public class ResultView {
         printSubjectType(subjectType);
     }
 
+    public void printDismissalResult(final List<DismissalCrewDto> dtos) {
+        System.out.println(DISMISSAL_RESULT_TITLE);
+        dtos.stream()
+                .map(dto -> String.format(DISMISSAL_RESULT_FORM, dto.nickname(),
+                        dto.absentCount(), dto.lateCount(), dto.subjectType().name()))
+                .forEach(System.out::println);
+    }
+
     private void printAttendanceHistories(final List<LocalDateTime> attendanceHistory) {
         attendanceHistory.forEach(localDateTime -> printAttendanceHistory(
                 getAttendanceTimeFormat(localDateTime),
@@ -52,7 +64,7 @@ public class ResultView {
     }
 
     private String getAttendanceTimeFormat(final LocalDateTime localDateTime) {
-        if (DEFAULT_TIME.equals(localDateTime)) {
+        if (DEFAULT_TIME.equals(LocalTime.from(localDateTime))) {
             return DEFAULT_TIME_FORM;
         }
         return TimeFormatter.formatDateTime(localDateTime);
