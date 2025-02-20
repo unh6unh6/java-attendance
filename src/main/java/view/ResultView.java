@@ -1,10 +1,7 @@
 package view;
 
-import static model.AttendanceType.DEFAULT_TIME;
-
 import dto.DismissalCrewDto;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import model.AttendanceType;
@@ -17,7 +14,6 @@ public class ResultView {
     private static final String ATTENDANCE_HISTORY_FORM = "%s (%s)";
     private static final String MODIFY_HISTORY_FORM = "%s (%s) -> %s (%s) 수정 완료!";
     private static final String ATTENDANCE_HISTORY_BY_CREW_FORM = "이번 달 %s의 출석 기록입니다.";
-    private static final String DEFAULT_TIME_FORM = "--:--";
     private static final String ATTENDANCE_TYPE_COUNT_FORM = """
             출석: %d회
             지각: %d회
@@ -59,15 +55,8 @@ public class ResultView {
 
     private void printAttendanceHistories(final List<LocalDateTime> attendanceHistory) {
         attendanceHistory.forEach(localDateTime -> printAttendanceHistory(
-                getAttendanceTimeFormat(localDateTime),
+                TimeFormatter.formatDateTime(localDateTime),
                 AttendanceType.from(localDateTime)));
-    }
-
-    private String getAttendanceTimeFormat(final LocalDateTime localDateTime) {
-        if (DEFAULT_TIME.equals(LocalTime.from(localDateTime))) {
-            return DEFAULT_TIME_FORM;
-        }
-        return TimeFormatter.formatDateTime(localDateTime);
     }
 
     private void printAttendanceTypeCount(final Map<AttendanceType, Integer> result) {
