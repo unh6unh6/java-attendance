@@ -1,6 +1,12 @@
 package model;
 
+import dto.DismissalCrewDto;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Crews {
 
@@ -16,4 +22,22 @@ public class Crews {
         }
         return crews.get(nickname);
     }
+
+    public List<DismissalCrewDto> findDismissalCrewDtos(final LocalDate todayDate) {
+        List<DismissalCrewDto> dtos = new ArrayList<>();
+        for (Entry<String, Crew> entry : crews.entrySet()) {
+            Crew crew = entry.getValue();
+            List<LocalDateTime> attendanceHistory = crew.getAttendanceHistory(todayDate);
+            Map<AttendanceType, Integer> result = AttendanceType.countAttendanceType(attendanceHistory);
+            SubjectType subjectType = SubjectType.from(result);
+            dtos.add(new DismissalCrewDto(
+                    entry.getKey(),
+                    result.get(AttendanceType.결석),
+                    result.get(AttendanceType.지각),
+                    subjectType
+            ));
+        }
+        return dtos;
+    }
+
 }
