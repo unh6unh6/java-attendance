@@ -27,15 +27,17 @@ public class Initializer {
         Map<String, Crew> crewsMap = new HashMap<>();
         List<String> lines = FileReader.readFile();
         for (String line : lines) {
-            String[] tokens = line.split(SPLITTER);
-            String nickname = tokens[0];
-            LocalDateTime attendanceDateTime = StringParser.parseLocalDateTime(tokens[1]);
-
-            Crew crew = getCrew(crewsMap, nickname);
-
-            crew.loadAttendanceHistory(attendanceDateTime);
+            loadAttendanceHistory(line, crewsMap);
         }
         return new Crews(crewsMap);
+    }
+
+    private void loadAttendanceHistory(String line, Map<String, Crew> crewsMap) {
+        String[] tokens = line.split(SPLITTER);
+        String nickname = tokens[0];
+        LocalDateTime attendanceDateTime = StringParser.parseLocalDateTime(tokens[1]);
+        Crew crew = getCrew(crewsMap, nickname);
+        crew.loadAttendanceHistory(attendanceDateTime);
     }
 
     private Crew getCrew(final Map<String, Crew> crewsMap, final String nickname) {

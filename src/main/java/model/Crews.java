@@ -26,21 +26,22 @@ public class Crews {
     public List<DismissalCrewDto> findDismissalCrewDtos(final LocalDate todayDate) {
         List<DismissalCrewDto> dtos = new ArrayList<>();
         for (Entry<String, Crew> entry : crews.entrySet()) {
-            Crew crew = entry.getValue();
-            List<LocalDateTime> attendanceHistory = crew.getAttendanceHistory(todayDate);
-            Map<AttendanceType, Integer> result = AttendanceType.countAttendanceType(attendanceHistory);
-            SubjectType subjectType = SubjectType.from(result);
-            if (subjectType.equals(SubjectType.해당없음)) {
-                continue;
-            }
-            dtos.add(new DismissalCrewDto(
-                    entry.getKey(),
-                    result.get(AttendanceType.결석),
-                    result.get(AttendanceType.지각),
-                    subjectType
-            ));
+            addDismissalCrewDto(todayDate, entry, dtos);
         }
         return dtos;
     }
+
+    private static void addDismissalCrewDto(LocalDate todayDate, Entry<String, Crew> entry,
+                                            List<DismissalCrewDto> dtos) {
+        List<LocalDateTime> attendanceHistory = entry.getValue().getAttendanceHistory(todayDate);
+        Map<AttendanceType, Integer> result = AttendanceType.countAttendanceType(attendanceHistory);
+        SubjectType subjectType = SubjectType.from(result);
+        if (subjectType.equals(SubjectType.해당없음)) {
+            return;
+        }
+        dtos.add(new DismissalCrewDto(entry.getKey(), result.get(AttendanceType.결석),
+                result.get(AttendanceType.지각), subjectType));
+    }
+
 
 }

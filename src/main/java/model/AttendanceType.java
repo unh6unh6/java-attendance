@@ -23,8 +23,12 @@ public enum AttendanceType {
     private final Duration threshold;
 
     public static AttendanceType from(final LocalDateTime attendanceDateTime) {
-        LocalTime startTime = getStartTime(attendanceDateTime.getDayOfWeek());
         LocalTime attendanceTime = LocalTime.from(attendanceDateTime);
+        LocalTime startTime = getStartTime(attendanceDateTime.getDayOfWeek());
+        return getAttendanceTypeByTime(attendanceTime, startTime);
+    }
+
+    private static AttendanceType getAttendanceTypeByTime(final LocalTime attendanceTime, final LocalTime startTime) {
         if (attendanceTime.equals(DEFAULT_TIME) || attendanceTime.isAfter(startTime.plus(결석.threshold))) {
             return 결석;
         }

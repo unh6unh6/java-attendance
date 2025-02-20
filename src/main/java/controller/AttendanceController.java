@@ -39,13 +39,12 @@ public class AttendanceController {
         start(crews);
     }
 
+    public static LocalDate getTodayDate() {
+        return LocalDate.of(2024, 12, 13);
+    }
+
     private void process(final Crews crews, final Command command) {
-        if (command.equals(Command.CHECK_ATTENDANCE)) {
-            checkAttendance(crews);
-        }
-        if (command.equals(Command.MODIFY_ATTENDANCE)) {
-            modifyAttendance(crews);
-        }
+        processAttendance(crews, command);
         if (command.equals(Command.CHECK_ATTENDANCE_BY_CREW)) {
             checkAttendanceHistoryByCrew(crews);
         }
@@ -54,46 +53,52 @@ public class AttendanceController {
         }
     }
 
+    private void processAttendance(Crews crews, Command command) {
+        if (command.equals(Command.CHECK_ATTENDANCE)) {
+            checkAttendance(crews);
+        }
+        if (command.equals(Command.MODIFY_ATTENDANCE)) {
+            modifyAttendance(crews);
+        }
+    }
+
     private void checkAttendance(final Crews crews) {
         LocalDate todayDate = getTodayDate();
         campus.validateOperationDate(todayDate);
-        String nickname = inputView.readNickname();
-        Crew crew = crews.findCrewByNickname(nickname);
-
-        String attendanceTimeInput = inputView.readAttendanceTime();
-        LocalTime attendanceTime = StringParser.parseLocalTime(attendanceTimeInput);
-        LocalDateTime attendanceDateTime = LocalDateTime.of(todayDate, attendanceTime);
-
+        Crew crew = getCrew(crews);
+        LocalDateTime attendanceDateTime = getLocalDateTime(todayDate);
         campus.validateOperationTime(attendanceDateTime);
-
         crew.doAttendance(attendanceDateTime);
-
         resultView.printAttendanceHistory(
-                TimeFormatter.formatDateTime(attendanceDateTime),
-                AttendanceType.from(attendanceDateTime)
-        );
+                TimeFormatter.formatDateTime(attendanceDateTime), AttendanceType.from(attendanceDateTime));
+    }
+
+    private LocalDateTime getLocalDateTime(final LocalDate todayDate) {
+        LocalTime attendanceTime = StringParser.parseLocalTime(inputView.readAttendanceTime());
+        return LocalDateTime.of(todayDate, attendanceTime);
+    }
+
+    private Crew getCrew(final Crews crews) {
+        String nickname = inputView.readNickname();
+        return crews.findCrewByNickname(nickname);
     }
 
     private void modifyAttendance(final Crews crews) {
-        String nickname = inputView.readModifyNickname();
-        Crew crew = crews.findCrewByNickname(nickname);
+        Crew crew = crews.findCrewByNickname(inputView.readModifyNickname());
 
-        String dayInput = inputView.readModifyDay();
-        LocalDate modifyDate = StringParser.parseLocalDate(dayInput);
-        campus.validateOperationDate(modifyDate);
-
-        String timeInput = inputView.readModifyTime();
-        LocalTime modifyTime = StringParser.parseLocalTime(timeInput);
-        LocalDateTime modifyDateTime = LocalDateTime.of(modifyDate, modifyTime);
+        LocalDateTime modifyDateTime = getModifyLocalDateTime();
         campus.validateOperationTime(modifyDateTime);
 
         LocalDateTime previousTime = crew.doModify(modifyDateTime, getTodayDate());
-        resultView.printModifyHistory(
-                TimeFormatter.formatDateTime(previousTime),
-                AttendanceType.from(previousTime),
-                TimeFormatter.formatTime(modifyTime),
-                AttendanceType.from(modifyDateTime)
-        );
+        resultView.printModifyHistory(TimeFormatter.formatDateTime(previousTime), AttendanceType.from(previousTime),
+                TimeFormatter.formatTime(LocalTime.from(modifyDateTime)), AttendanceType.from(modifyDateTime));
+    }
+
+    private LocalDateTime getModifyLocalDateTime() {
+        LocalDate modifyDate = StringParser.parseLocalDate(inputView.readModifyDay());
+        campus.validateOperationDate(modifyDate);
+        LocalTime modifyTime = StringParser.parseLocalTime(inputView.readModifyTime());
+        return LocalDateTime.of(modifyDate, modifyTime);
     }
 
     private void checkAttendanceHistoryByCrew(final Crews crews) {
@@ -111,10 +116,5 @@ public class AttendanceController {
         List<DismissalCrewDto> dtos = crews.findDismissalCrewDtos(getTodayDate());
         Collections.sort(dtos);
         resultView.printDismissalResult(dtos);
-    }
-
-    public static LocalDate getTodayDate() {
-        return LocalDate.of(2024, 12, 13);
-        //return LocalDate.now();
     }
 }

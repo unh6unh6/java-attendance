@@ -12,7 +12,6 @@ public class Application {
         InputView inputView = new InputView(new InputValidator());
         ResultView resultView = new ResultView();
         Campus campus = new Campus();
-
         Initializer initializer = new Initializer(campus);
         Crews crews = initializer.initialize();
 
