@@ -55,14 +55,15 @@ public class AttendanceController {
     }
 
     private void checkAttendance(final Crews crews) {
+        LocalDate todayDate = getTodayDate();
+        campus.validateOperationDate(todayDate);
         String nickname = inputView.readNickname();
         Crew crew = crews.findCrewByNickname(nickname);
 
         String attendanceTimeInput = inputView.readAttendanceTime();
         LocalTime attendanceTime = StringParser.parseLocalTime(attendanceTimeInput);
-        LocalDateTime attendanceDateTime = LocalDateTime.of(getTodayDate(), attendanceTime);
+        LocalDateTime attendanceDateTime = LocalDateTime.of(todayDate, attendanceTime);
 
-        campus.validateOperationDate(LocalDate.from(attendanceDateTime));
         campus.validateOperationTime(attendanceDateTime);
 
         crew.doAttendance(attendanceDateTime);
@@ -113,7 +114,7 @@ public class AttendanceController {
     }
 
     public static LocalDate getTodayDate() {
-        return LocalDate.of(2024, 12, 16);
+        return LocalDate.of(2024, 12, 13);
         //return LocalDate.now();
     }
 }
