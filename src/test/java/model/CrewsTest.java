@@ -7,7 +7,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import dto.DismissalCrewDto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -84,5 +86,31 @@ public class CrewsTest {
 
         // When & Then
         assertThat(crews.findDismissalCrewDtos(todayDate)).containsOnly(hotteokDto, mintDto, wilsonDto);
+    }
+
+    // 제적 위험자 조회 결과
+    //- 빙티: 결석 3회, 지각 4회 (면담) // 결석 4회, 지각 1회
+    //- 이든: 결석 2회, 지각 5회 (면담) // 결석 3회, 지각 2회
+    //- 빙봉: 결석 1회, 지각 6회 (면담) // 결석 3회
+    //- 쿠키: 결석 2회, 지각 3회 (면담) // 결석 3회
+    //- 짱수: 결석 0회, 지각 6회 (경고) // 결석 2회
+    @DisplayName("제적 위험자를 정렬한다")
+    @Test
+    void sortTest() {
+        // Given
+        DismissalCrewDto bingbong = new DismissalCrewDto("빙봉", 1, 6, SubjectType.면담);
+        DismissalCrewDto cookie = new DismissalCrewDto("쿠키", 2, 3, SubjectType.면담);
+        DismissalCrewDto bingtee = new DismissalCrewDto("빙티", 3, 4, SubjectType.면담);
+        DismissalCrewDto zzangsu = new DismissalCrewDto("짱수", 0, 6, SubjectType.경고);
+        DismissalCrewDto eden = new DismissalCrewDto("이든", 2, 5, SubjectType.면담);
+        List<DismissalCrewDto> dtos = new ArrayList<>(List.of(bingbong, cookie, bingtee, zzangsu, eden));
+
+        Crews crews = new Crews(new HashMap<>());
+
+        // When
+        crews.sortDismissalCrewDtos(dtos);
+
+        // Then
+        assertThat(dtos).containsExactly(bingtee, eden, bingbong, cookie, zzangsu);
     }
 }

@@ -4,6 +4,7 @@ import dto.DismissalCrewDto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -31,6 +32,17 @@ public class Crews {
         return dtos;
     }
 
+    public void sortDismissalCrewDtos(final List<DismissalCrewDto> dtos) {
+        Comparator<DismissalCrewDto> c = Comparator
+                .comparing(DismissalCrewDto::subjectType, SubjectType::compare)
+                .thenComparing((dto1, dto2) ->
+                        Integer.compare(
+                                SubjectType.calculateTotalLateCount(dto2.lateCount(), dto2.absentCount()),
+                                SubjectType.calculateTotalLateCount(dto1.lateCount(), dto1.absentCount())))
+                .thenComparing(DismissalCrewDto::nickname);
+        dtos.sort(c);
+    }
+
     private static void addDismissalCrewDto(LocalDate todayDate, Entry<String, Crew> entry,
                                             List<DismissalCrewDto> dtos) {
         List<LocalDateTime> attendanceHistory = entry.getValue().getAttendanceHistory(todayDate);
@@ -42,6 +54,4 @@ public class Crews {
         dtos.add(new DismissalCrewDto(entry.getKey(), result.get(AttendanceType.결석),
                 result.get(AttendanceType.지각), subjectType));
     }
-
-
 }

@@ -4,7 +4,6 @@ import dto.DismissalCrewDto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import model.AttendanceType;
@@ -60,7 +59,7 @@ public class AttendanceController {
             checkDismissalCrews(crews);
         }
     }
-    
+
     private void checkAttendance(final Crews crews) {
         LocalDate todayDate = getTodayDate();
         campus.validateOperationDate(todayDate);
@@ -113,7 +112,7 @@ public class AttendanceController {
 
     private void checkDismissalCrews(final Crews crews) {
         List<DismissalCrewDto> dtos = crews.findDismissalCrewDtos(getTodayDate());
-        Collections.sort(dtos);
+        crews.sortDismissalCrewDtos(dtos);
         resultView.printDismissalResult(dtos);
     }
 }
