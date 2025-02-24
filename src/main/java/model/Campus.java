@@ -9,12 +9,12 @@ import util.TimeFormatter;
 public class Campus {
 
     private static final int CHRISTMAS_DAY = 25;
+    private static final LocalTime OPEN_TIME = LocalTime.of(8, 0);
+    private static final LocalTime CLOSE_TIME = LocalTime.of(23, 0);
 
     public void validateOperationTime(final LocalDateTime localDateTime) {
         LocalTime time = LocalTime.from(localDateTime);
-        LocalTime openTime = LocalTime.of(8, 0);
-        LocalTime closeTime = LocalTime.of(23, 0);
-        if (isNotOperationTime(time, closeTime, openTime)) {
+        if (isNotOperationTime(time, CLOSE_TIME, OPEN_TIME)) {
             throw new IllegalArgumentException("[ERROR] 캠퍼스 운영 시간이 아닙니다.");
         }
     }
