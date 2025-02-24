@@ -10,15 +10,18 @@ import java.util.Map;
 
 public enum AttendanceType {
 
-    출석(Duration.ofMinutes(0)),
-    지각(Duration.ofMinutes(5)),
-    결석(Duration.ofMinutes(30));
+    PRESENT("출석", Duration.ofMinutes(0)),
+    LATE("지각", Duration.ofMinutes(5)),
+    ABSENT("결석", Duration.ofMinutes(30));
 
     public static final LocalTime DEFAULT_TIME = LocalTime.MIN;
 
-    AttendanceType(Duration threshold) {
+    AttendanceType(final String typeName, final Duration threshold) {
+        this.typeName = typeName;
         this.threshold = threshold;
     }
+
+    private final String typeName;
 
     private final Duration threshold;
 
@@ -29,20 +32,20 @@ public enum AttendanceType {
     }
 
     private static AttendanceType getAttendanceTypeByTime(final LocalTime attendanceTime, final LocalTime startTime) {
-        if (attendanceTime.equals(DEFAULT_TIME) || attendanceTime.isAfter(startTime.plus(결석.threshold))) {
-            return 결석;
+        if (attendanceTime.equals(DEFAULT_TIME) || attendanceTime.isAfter(startTime.plus(ABSENT.threshold))) {
+            return ABSENT;
         }
-        if (attendanceTime.isAfter(startTime.plus(지각.threshold))) {
-            return 지각;
+        if (attendanceTime.isAfter(startTime.plus(LATE.threshold))) {
+            return LATE;
         }
-        return 출석;
+        return PRESENT;
     }
 
     public static Map<AttendanceType, Integer> countAttendanceType(final List<LocalDateTime> attendanceTimes) {
         Map<AttendanceType, Integer> result = new EnumMap<>(AttendanceType.class);
-        result.put(출석, 0);
-        result.put(지각, 0);
-        result.put(결석, 0);
+        result.put(PRESENT, 0);
+        result.put(LATE, 0);
+        result.put(ABSENT, 0);
         for (LocalDateTime attendanceTime : attendanceTimes) {
             result.merge(from(attendanceTime), 1, Integer::sum);
         }
@@ -54,5 +57,9 @@ public enum AttendanceType {
             return LocalTime.of(13, 0);
         }
         return LocalTime.of(10, 0);
+    }
+
+    public String getTypeName() {
+        return typeName;
     }
 }

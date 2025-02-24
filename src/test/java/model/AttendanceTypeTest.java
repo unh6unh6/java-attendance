@@ -33,7 +33,7 @@ class AttendanceTypeTest {
         AttendanceType attendanceType = AttendanceType.from(time);
 
         // Then
-        assertThat(attendanceType.name()).isEqualTo(attendanceTypeName);
+        assertThat(attendanceType.getTypeName()).isEqualTo(attendanceTypeName);
     }
 
     @DisplayName("출석 타입별 횟수를 계산한다")
@@ -53,9 +53,9 @@ class AttendanceTypeTest {
 
         // Then
         Assertions.assertThat(result).containsExactly(
-                entry(AttendanceType.출석, 2),
-                entry(AttendanceType.지각, 1),
-                entry(AttendanceType.결석, 2)
+                entry(AttendanceType.PRESENT, 2),
+                entry(AttendanceType.LATE, 1),
+                entry(AttendanceType.ABSENT, 2)
         );
     }
 }

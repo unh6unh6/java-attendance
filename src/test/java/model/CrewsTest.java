@@ -80,9 +80,9 @@ public class CrewsTest {
                 Map.of("호떡", hotteok, "밍트", mint, "윌슨", wilson)
         );
         LocalDate todayDate = LocalDate.of(2024, 12, 10);
-        DismissalCrewDto hotteokDto = new DismissalCrewDto("호떡", 2, 0, SubjectType.경고);
-        DismissalCrewDto mintDto = new DismissalCrewDto("밍트", 3, 0, SubjectType.면담);
-        DismissalCrewDto wilsonDto = new DismissalCrewDto("윌슨", 6, 0, SubjectType.제적);
+        DismissalCrewDto hotteokDto = new DismissalCrewDto("호떡", 2, 0, SubjectType.WARNING);
+        DismissalCrewDto mintDto = new DismissalCrewDto("밍트", 3, 0, SubjectType.COUNSELING);
+        DismissalCrewDto wilsonDto = new DismissalCrewDto("윌슨", 6, 0, SubjectType.EXPULSION);
 
         // When & Then
         assertThat(crews.findDismissalCrewDtos(todayDate)).containsOnly(hotteokDto, mintDto, wilsonDto);
@@ -98,11 +98,11 @@ public class CrewsTest {
     @Test
     void sortTest() {
         // Given
-        DismissalCrewDto bingbong = new DismissalCrewDto("빙봉", 1, 6, SubjectType.면담);
-        DismissalCrewDto cookie = new DismissalCrewDto("쿠키", 2, 3, SubjectType.면담);
-        DismissalCrewDto bingtee = new DismissalCrewDto("빙티", 3, 4, SubjectType.면담);
-        DismissalCrewDto zzangsu = new DismissalCrewDto("짱수", 0, 6, SubjectType.경고);
-        DismissalCrewDto eden = new DismissalCrewDto("이든", 2, 5, SubjectType.면담);
+        DismissalCrewDto bingbong = new DismissalCrewDto("빙봉", 1, 6, SubjectType.COUNSELING);
+        DismissalCrewDto cookie = new DismissalCrewDto("쿠키", 2, 3, SubjectType.COUNSELING);
+        DismissalCrewDto bingtee = new DismissalCrewDto("빙티", 3, 4, SubjectType.COUNSELING);
+        DismissalCrewDto zzangsu = new DismissalCrewDto("짱수", 0, 6, SubjectType.WARNING);
+        DismissalCrewDto eden = new DismissalCrewDto("이든", 2, 5, SubjectType.COUNSELING);
         List<DismissalCrewDto> dtos = new ArrayList<>(List.of(bingbong, cookie, bingtee, zzangsu, eden));
 
         Crews crews = new Crews(new HashMap<>());

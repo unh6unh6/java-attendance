@@ -48,10 +48,10 @@ public class Crews {
         List<LocalDateTime> attendanceHistory = entry.getValue().getAttendanceHistory(todayDate);
         Map<AttendanceType, Integer> result = AttendanceType.countAttendanceType(attendanceHistory);
         SubjectType subjectType = SubjectType.from(result);
-        if (subjectType.equals(SubjectType.해당없음)) {
+        if (subjectType.equals(SubjectType.NONE)) {
             return;
         }
-        dtos.add(new DismissalCrewDto(entry.getKey(), result.get(AttendanceType.결석),
-                result.get(AttendanceType.지각), subjectType));
+        dtos.add(new DismissalCrewDto(entry.getKey(), result.get(AttendanceType.ABSENT),
+                result.get(AttendanceType.LATE), subjectType));
     }
 }
