@@ -1,8 +1,10 @@
 package model;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -35,6 +37,13 @@ class SubjectTypeTest {
         SubjectType expected = SubjectType.from(result);
 
         // Then
-        Assertions.assertThat(expected.getTypeName()).isEqualTo(subjectTypeName);
+        assertThat(expected.getTypeName()).isEqualTo(subjectTypeName);
+    }
+
+    @Test
+    void calculateTotalLateCountTest() {
+        int lateCount = 3;
+        int absentCount = 2;
+        assertThat(SubjectType.calculateTotalLateCount(lateCount, absentCount)).isEqualTo(9);
     }
 }
