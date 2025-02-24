@@ -44,24 +44,23 @@ public class AttendanceController {
     }
 
     private void process(final Crews crews, final Command command) {
-        processAttendance(crews, command);
+        if (command.equals(Command.CHECK_ATTENDANCE)) {
+            checkAttendance(crews);
+            return;
+        }
+        if (command.equals(Command.MODIFY_ATTENDANCE)) {
+            modifyAttendance(crews);
+            return;
+        }
         if (command.equals(Command.CHECK_ATTENDANCE_BY_CREW)) {
             checkAttendanceHistoryByCrew(crews);
+            return;
         }
         if (command.equals(Command.CHECK_DISMISSAL_CREW)) {
             checkDismissalCrews(crews);
         }
     }
-
-    private void processAttendance(Crews crews, Command command) {
-        if (command.equals(Command.CHECK_ATTENDANCE)) {
-            checkAttendance(crews);
-        }
-        if (command.equals(Command.MODIFY_ATTENDANCE)) {
-            modifyAttendance(crews);
-        }
-    }
-
+    
     private void checkAttendance(final Crews crews) {
         LocalDate todayDate = getTodayDate();
         campus.validateOperationDate(todayDate);
