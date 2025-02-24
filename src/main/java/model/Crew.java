@@ -36,10 +36,9 @@ public class Crew {
     }
 
     public List<LocalDateTime> getAttendanceHistory(final LocalDate todayDate) {
-        int today = todayDate.getDayOfMonth();
-        return IntStream.rangeClosed(1, 31)
+        int yesterday = todayDate.getDayOfMonth() - 1;
+        return IntStream.rangeClosed(1, yesterday)
                 .filter(attendance::containsKey)
-                .filter(day -> day < today)
                 .mapToObj(attendance::get)
                 .toList();
     }
