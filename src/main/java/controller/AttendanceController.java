@@ -73,7 +73,7 @@ public class AttendanceController {
     private void modifyAttendance(final Crews crews) {
         Crew crew = getCrew(crews, inputView.readModifyNickname());
 
-        LocalDateTime modifyDateTime = getModifyLocalDateTime();
+        LocalDateTime modifyDateTime = getModifiedAttendanceDateTime();
         campus.validateOperationTime(modifyDateTime);
 
         LocalDateTime previousTime = crew.doModify(modifyDateTime, getTodayDate());
@@ -81,7 +81,7 @@ public class AttendanceController {
                 LocalTime.from(modifyDateTime), AttendanceType.from(modifyDateTime));
     }
 
-    private LocalDateTime getModifyLocalDateTime() {
+    private LocalDateTime getModifiedAttendanceDateTime() {
         LocalDate modifyDate = StringParser.parseLocalDate(inputView.readModifyDay());
         campus.validateOperationDate(modifyDate);
         LocalTime modifyTime = StringParser.parseLocalTime(inputView.readModifyTime());
