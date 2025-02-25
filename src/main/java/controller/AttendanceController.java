@@ -58,7 +58,7 @@ public class AttendanceController {
     private void checkAttendance(final Crews crews) {
         LocalDate todayDate = getTodayDate();
         campus.validateOperationDate(todayDate);
-        Crew crew = getCrew(crews);
+        Crew crew = getCrew(crews, inputView.readNickname());
         LocalDateTime attendanceDateTime = getLocalDateTime(todayDate);
         campus.validateOperationTime(attendanceDateTime);
         crew.doAttendance(attendanceDateTime);
@@ -71,13 +71,8 @@ public class AttendanceController {
         return LocalDateTime.of(todayDate, attendanceTime);
     }
 
-    private Crew getCrew(final Crews crews) {
-        String nickname = inputView.readNickname();
-        return crews.findCrewByNickname(nickname);
-    }
-
     private void modifyAttendance(final Crews crews) {
-        Crew crew = crews.findCrewByNickname(inputView.readModifyNickname());
+        Crew crew = getCrew(crews, inputView.readModifyNickname());
 
         LocalDateTime modifyDateTime = getModifyLocalDateTime();
         campus.validateOperationTime(modifyDateTime);
@@ -96,7 +91,7 @@ public class AttendanceController {
 
     private void checkAttendanceHistoryByCrew(final Crews crews) {
         String nickname = inputView.readNickname();
-        Crew crew = crews.findCrewByNickname(nickname);
+        Crew crew = getCrew(crews, nickname);
 
         List<LocalDateTime> attendanceHistory = crew.getAttendanceHistory(getTodayDate());
         Map<AttendanceType, Integer> result = AttendanceType.countAttendanceType(attendanceHistory);
@@ -109,5 +104,9 @@ public class AttendanceController {
         List<DismissalCrewDto> dtos = crews.findDismissalCrewDtos(getTodayDate());
         crews.sortDismissalCrewDtos(dtos);
         resultView.printDismissalResult(dtos);
+    }
+
+    private Crew getCrew(final Crews crews, final String nickname) {
+        return crews.findCrewByNickname(nickname);
     }
 }
