@@ -2,6 +2,7 @@ package view;
 
 import dto.DismissalCrewDto;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import model.AttendanceType;
@@ -23,14 +24,16 @@ public class ResultView {
     private static final String DISMISSAL_RESULT_TITLE = "제적 위험자 조회 결과";
     private static final String DISMISSAL_RESULT_FORM = "- %s: 결석 %d회, 지각 %d회 (%s)";
 
-    public void printAttendanceHistory(final String attendanceTime, final AttendanceType attendanceType) {
-        System.out.printf(ATTENDANCE_HISTORY_FORM + LINE, attendanceTime, attendanceType.getTypeName());
+    public void printAttendanceHistory(final LocalDateTime attendanceDateTime, final AttendanceType attendanceType) {
+        System.out.printf(ATTENDANCE_HISTORY_FORM + LINE,
+                TimeFormatter.formatDateTime(attendanceDateTime), attendanceType.getTypeName());
     }
 
-    public void printModifyHistory(final String previousTime, final AttendanceType previousType,
-                                   final String modifyTime, final AttendanceType modifyType) {
-        System.out.printf(LINE + MODIFY_HISTORY_FORM + LINE, previousTime, previousType.getTypeName(),
-                modifyTime, modifyType.getTypeName());
+    public void printModifyHistory(final LocalDateTime previousTime, final AttendanceType previousType,
+                                   final LocalTime modifyTime, final AttendanceType modifyType) {
+        System.out.printf(LINE + MODIFY_HISTORY_FORM + LINE,
+                TimeFormatter.formatDateTime(previousTime), previousType.getTypeName(),
+                TimeFormatter.formatTime(modifyTime), modifyType.getTypeName());
     }
 
     public void printAttendanceHistoryResultByCrew(
@@ -55,7 +58,7 @@ public class ResultView {
 
     private void printAttendanceHistories(final List<LocalDateTime> attendanceHistory) {
         attendanceHistory.forEach(localDateTime -> printAttendanceHistory(
-                TimeFormatter.formatDateTime(localDateTime),
+                localDateTime,
                 AttendanceType.from(localDateTime)));
     }
 

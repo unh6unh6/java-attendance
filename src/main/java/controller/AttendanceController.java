@@ -14,7 +14,6 @@ import model.Crew;
 import model.Crews;
 import model.SubjectType;
 import util.StringParser;
-import util.TimeFormatter;
 import view.InputView;
 import view.ResultView;
 
@@ -63,7 +62,7 @@ public class AttendanceController {
         campus.validateOperationTime(attendanceDateTime);
         crew.doAttendance(attendanceDateTime);
         resultView.printAttendanceHistory(
-                TimeFormatter.formatDateTime(attendanceDateTime), AttendanceType.from(attendanceDateTime));
+                attendanceDateTime, AttendanceType.from(attendanceDateTime));
     }
 
     private LocalDateTime getLocalDateTime(final LocalDate todayDate) {
@@ -78,8 +77,8 @@ public class AttendanceController {
         campus.validateOperationTime(modifyDateTime);
 
         LocalDateTime previousTime = crew.doModify(modifyDateTime, getTodayDate());
-        resultView.printModifyHistory(TimeFormatter.formatDateTime(previousTime), AttendanceType.from(previousTime),
-                TimeFormatter.formatTime(LocalTime.from(modifyDateTime)), AttendanceType.from(modifyDateTime));
+        resultView.printModifyHistory(previousTime, AttendanceType.from(previousTime),
+                LocalTime.from(modifyDateTime), AttendanceType.from(modifyDateTime));
     }
 
     private LocalDateTime getModifyLocalDateTime() {
