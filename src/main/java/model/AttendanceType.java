@@ -16,6 +16,9 @@ public enum AttendanceType {
 
     public static final LocalTime DEFAULT_TIME = LocalTime.MIN;
 
+    private static final LocalTime MONDAY_START_TIME = LocalTime.of(13, 0);
+    private static final LocalTime WEEKDAY_START_TIME = LocalTime.of(10, 0);
+
     AttendanceType(final String typeName, final Duration threshold) {
         this.typeName = typeName;
         this.threshold = threshold;
@@ -54,9 +57,9 @@ public enum AttendanceType {
 
     private static LocalTime getStartTime(final DayOfWeek dayOfWeek) {
         if (dayOfWeek == DayOfWeek.MONDAY) {
-            return LocalTime.of(13, 0);
+            return MONDAY_START_TIME;
         }
-        return LocalTime.of(10, 0);
+        return WEEKDAY_START_TIME;
     }
 
     public String getTypeName() {
