@@ -33,14 +33,14 @@ public class Crews {
     }
 
     public void sortDismissalCrewDtos(final List<DismissalCrewDto> dtos) {
-        Comparator<DismissalCrewDto> c = Comparator
+        Comparator<DismissalCrewDto> dismissalCrewDtoComparator = Comparator
                 .comparing(DismissalCrewDto::subjectType, SubjectType::compare)
-                .thenComparing((dto1, dto2) ->
+                .thenComparing((firstDto, secondDto) ->
                         Integer.compare(
-                                SubjectType.calculateTotalLateCount(dto2.lateCount(), dto2.absentCount()),
-                                SubjectType.calculateTotalLateCount(dto1.lateCount(), dto1.absentCount())))
+                                SubjectType.calculateTotalLateCount(secondDto.lateCount(), secondDto.absentCount()),
+                                SubjectType.calculateTotalLateCount(firstDto.lateCount(), firstDto.absentCount())))
                 .thenComparing(DismissalCrewDto::nickname);
-        dtos.sort(c);
+        dtos.sort(dismissalCrewDtoComparator);
     }
 
     private static void addDismissalCrewDto(final LocalDate todayDate, final Entry<String, Crew> entry,
