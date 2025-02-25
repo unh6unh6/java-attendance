@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import model.AttendanceType;
 import model.Campus;
 import model.Command;
@@ -23,10 +24,21 @@ public class AttendanceController {
     private final ResultView resultView;
     private final Campus campus;
 
+    private final Map<Command, Consumer<Crews>> commandExecutors = Map.of(
+            Command.CHECK_ATTENDANCE, this::checkAttendance,
+            Command.MODIFY_ATTENDANCE, this::modifyAttendance,
+            Command.CHECK_ATTENDANCE_BY_CREW, this::checkAttendanceHistoryByCrew,
+            Command.CHECK_DISMISSAL_CREW, this::checkDismissalCrews
+    );
+
     public AttendanceController(final InputView inputView, final ResultView resultView, final Campus campus) {
         this.inputView = inputView;
         this.resultView = resultView;
         this.campus = campus;
+    }
+
+    public static LocalDate getTodayDate() {
+        return LocalDate.of(2024, 12, 13);
     }
 
     public void start(final Crews crews) {
@@ -38,26 +50,9 @@ public class AttendanceController {
         start(crews);
     }
 
-    public static LocalDate getTodayDate() {
-        return LocalDate.of(2024, 12, 13);
-    }
-
     private void process(final Crews crews, final Command command) {
-        if (command.equals(Command.CHECK_ATTENDANCE)) {
-            checkAttendance(crews);
-            return;
-        }
-        if (command.equals(Command.MODIFY_ATTENDANCE)) {
-            modifyAttendance(crews);
-            return;
-        }
-        if (command.equals(Command.CHECK_ATTENDANCE_BY_CREW)) {
-            checkAttendanceHistoryByCrew(crews);
-            return;
-        }
-        if (command.equals(Command.CHECK_DISMISSAL_CREW)) {
-            checkDismissalCrews(crews);
-        }
+        final Consumer<Crews> consumer = commandExecutors.get(command);
+        consumer.accept(crews);
     }
 
     private void checkAttendance(final Crews crews) {
