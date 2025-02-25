@@ -43,8 +43,8 @@ public class Crews {
         dtos.sort(c);
     }
 
-    private static void addDismissalCrewDto(LocalDate todayDate, Entry<String, Crew> entry,
-                                            List<DismissalCrewDto> dtos) {
+    private static void addDismissalCrewDto(final LocalDate todayDate, final Entry<String, Crew> entry,
+                                            final List<DismissalCrewDto> dtos) {
         List<LocalDateTime> attendanceHistory = entry.getValue().getAttendanceHistory(todayDate);
         Map<AttendanceType, Integer> result = AttendanceType.countAttendanceType(attendanceHistory);
         SubjectType subjectType = SubjectType.from(result);

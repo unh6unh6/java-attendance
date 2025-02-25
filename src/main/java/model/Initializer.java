@@ -32,7 +32,7 @@ public class Initializer {
         return new Crews(crewsMap);
     }
 
-    private void loadAttendanceHistory(String line, Map<String, Crew> crewsMap) {
+    private void loadAttendanceHistory(final String line, final Map<String, Crew> crewsMap) {
         String[] tokens = line.split(SPLITTER);
         String nickname = tokens[0];
         LocalDateTime attendanceDateTime = StringParser.parseLocalDateTime(tokens[1]);

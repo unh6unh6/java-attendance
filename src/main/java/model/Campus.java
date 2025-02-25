@@ -30,7 +30,8 @@ public class Campus {
         return isWeekend(dayOfWeek) || isHoliday(date);
     }
 
-    private static boolean isNotOperationTime(LocalTime time, LocalTime closeTime, LocalTime openTime) {
+    private static boolean isNotOperationTime(final LocalTime time, final LocalTime closeTime,
+                                              final LocalTime openTime) {
         return time.isAfter(closeTime) || time.isBefore(openTime);
     }
 

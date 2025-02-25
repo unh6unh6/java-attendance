@@ -52,7 +52,7 @@ public enum AttendanceType {
         return result;
     }
 
-    private static LocalTime getStartTime(DayOfWeek dayOfWeek) {
+    private static LocalTime getStartTime(final DayOfWeek dayOfWeek) {
         if (dayOfWeek == DayOfWeek.MONDAY) {
             return LocalTime.of(13, 0);
         }

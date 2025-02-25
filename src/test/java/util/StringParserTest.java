@@ -29,7 +29,7 @@ class StringParserTest {
     @DisplayName("시간 형식이 HH:MM가 아니라면 예외가 발생한다")
     @ParameterizedTest
     @ValueSource(strings = {"11%12", "25:12"})
-    void invalidLocalTimeFormatTest(String input) {
+    void invalidLocalTimeFormatTest(final String input) {
         // Given
 
         // When & Then
