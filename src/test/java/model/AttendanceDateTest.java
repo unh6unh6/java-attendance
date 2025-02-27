@@ -5,16 +5,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class AttendanceDateTest {
 
     @DisplayName("출석 날짜를 생성한다")
-    @Test
-    void createAttendanceDateTime() {
-        LocalDate attendanceDate = LocalDate.of(2024, 12, 2);
+    @ParameterizedTest
+    @CsvSource({
+            "2024-12-02",
+            "2024-12-03",
+            "2024-12-26"
+    })
+    void createAttendanceDateTime(final LocalDate attendanceDate) {
         assertThatCode(() -> new AttendanceDate(attendanceDate))
                 .doesNotThrowAnyException();
     }
