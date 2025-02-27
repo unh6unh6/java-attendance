@@ -1,15 +1,14 @@
 package model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-public class AttendanceDateTime {
+public class AttendanceDate {
 
-    private final LocalDateTime dateTime;
+    private final LocalDate date;
 
-    public AttendanceDateTime(final LocalDateTime dateTime) {
-        validateCampusOperatingDay(LocalDate.from(dateTime));
-        this.dateTime = dateTime;
+    public AttendanceDate(final LocalDate date) {
+        validateCampusOperatingDay(date);
+        this.date = date;
     }
 
     private void validateCampusOperatingDay(final LocalDate date) {
