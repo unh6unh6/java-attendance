@@ -11,6 +11,9 @@ public class AttendanceBook {
     }
 
     public AttendanceHistory getAttendanceHistoryByNickname(final String nickname) {
+        if (!attendanceBook.containsKey(nickname)) {
+            throw new IllegalArgumentException("[ERROR] 등록되지 않은 닉네임입니다.");
+        }
         return attendanceBook.get(nickname);
     }
 }
