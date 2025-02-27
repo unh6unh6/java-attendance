@@ -1,10 +1,9 @@
 package model;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
-public enum CampusOperatingPolicy {
+public enum EducationTimePolicy {
     MON(DayOfWeek.MONDAY, LocalTime.of(13, 0), LocalTime.of(18, 0)),
     TUE(DayOfWeek.TUESDAY, LocalTime.of(10, 0), LocalTime.of(18, 0)),
     WED(DayOfWeek.WEDNESDAY, LocalTime.of(10, 0), LocalTime.of(18, 0)),
@@ -17,17 +16,10 @@ public enum CampusOperatingPolicy {
     private final LocalTime openTime;
     private final LocalTime closeTime;
 
-    CampusOperatingPolicy(final DayOfWeek dayOfWeek, final LocalTime openTime, final LocalTime closeTime) {
+    EducationTimePolicy(final DayOfWeek dayOfWeek, final LocalTime openTime, final LocalTime closeTime) {
         this.dayOfWeek = dayOfWeek;
         this.openTime = openTime;
         this.closeTime = closeTime;
     }
 
-    public static boolean isOperatingDate(final LocalDate date) {
-        return !isWeekend(date.getDayOfWeek()) && !Holiday.isHoliday(date);
-    }
-
-    private static boolean isWeekend(final DayOfWeek dayOfWeek) {
-        return dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY);
-    }
 }
