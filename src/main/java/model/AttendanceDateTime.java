@@ -14,8 +14,13 @@ public class AttendanceDateTime {
 
     private void validateCampusOperatingDay(final LocalDateTime dateTime) {
         DayOfWeek dayOfWeek = dateTime.getDayOfWeek();
-        if (dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY)) {
+        if (isWeekend(dayOfWeek)) {
             throw new IllegalArgumentException("[ERROR] 등교일이 아닙니다.");
         }
     }
+
+    private boolean isWeekend(final DayOfWeek dayOfWeek) {
+        return dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY);
+    }
+
 }
