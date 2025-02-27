@@ -13,13 +13,13 @@ public enum EducationTimePolicy {
     SUN(DayOfWeek.SUNDAY, LocalTime.MIN, LocalTime.MIN);
 
     private final DayOfWeek dayOfWeek;
-    private final LocalTime openTime;
-    private final LocalTime closeTime;
+    private final LocalTime startTime;
+    private final LocalTime finishTime;
 
-    EducationTimePolicy(final DayOfWeek dayOfWeek, final LocalTime openTime, final LocalTime closeTime) {
+    EducationTimePolicy(final DayOfWeek dayOfWeek, final LocalTime startTime, final LocalTime finishTime) {
         this.dayOfWeek = dayOfWeek;
-        this.openTime = openTime;
-        this.closeTime = closeTime;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
     }
 
 }

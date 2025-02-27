@@ -12,7 +12,7 @@ public class AttendanceDate {
     }
 
     private void validateCampusOperatingDay(final LocalDate date) {
-        if (!CampusOperatingDatePolicy.isOperatingDate(date)) {
+        if (!CampusOperatingPolicy.isOperatingDate(date)) {
             throw new IllegalArgumentException("[ERROR] 등교일이 아닙니다.");
         }
     }

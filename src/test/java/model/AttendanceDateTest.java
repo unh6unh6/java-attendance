@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class AttendanceDateTest {
 
-    @DisplayName("출석 날짜 및 시간을 생성한다")
+    @DisplayName("출석 날짜를 생성한다")
     @Test
     void createAttendanceDateTime() {
         LocalDate attendanceDate = LocalDate.of(2024, 12, 2);
