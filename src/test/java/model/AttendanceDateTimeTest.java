@@ -23,7 +23,8 @@ class AttendanceDateTimeTest {
     @ParameterizedTest
     @CsvSource({
             "2024-12-01T09:50",
-            "2024-12-07T09:50"
+            "2024-12-07T09:50",
+            "2024-12-25T09:50"
     })
     void notOperationDateTest(final LocalDateTime attendanceDateTime) {
         assertThatThrownBy(() -> new AttendanceDateTime(attendanceDateTime))
