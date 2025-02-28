@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class AttendanceHistoryTest {
 
@@ -37,17 +39,20 @@ class AttendanceHistoryTest {
     }
 
     @DisplayName("출석을 수정한다")
-    @Test
-    void modifyAttendanceTest() {
-        LocalDate date = LocalDate.of(2024, 12, 3);
+    @ParameterizedTest
+    @CsvSource({
+            "2024-12-03, 09:50",
+            "2024-12-04, 10:00"
+    })
+    void modifyAttendanceTest(final LocalDate date, final LocalTime time) {
         AttendanceDate attendanceDate = new AttendanceDate(date);
-        AttendanceTime time = new AttendanceTime(LocalTime.of(9, 50));
+        AttendanceTime attendanceTime = new AttendanceTime(time);
 
         AttendanceHistory history = new AttendanceHistory();
-        history.add(attendanceDate, time);
+        history.add(attendanceDate, attendanceTime);
 
-        history.modify(attendanceDate, time);
-        assertThat(history.getHistory()).containsEntry(attendanceDate, time);
+        history.modify(attendanceDate, attendanceTime);
+        assertThat(history.getHistory()).containsEntry(attendanceDate, attendanceTime);
     }
 
 }

@@ -24,6 +24,7 @@ public class AttendanceHistory {
     }
 
     public void modify(final AttendanceDate date, final AttendanceTime time) {
+        attendanceDateTable.putIfAbsent(date.getDate(), date);
         history.put(date, time);
     }
 
