@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +13,7 @@ class AttendanceHistoryTest {
     @DisplayName("출석 기록을 추가한다")
     @Test
     void addAttendanceTest() {
-        AttendanceHistory history = new AttendanceHistory(new HashMap<>());
+        AttendanceHistory history = new AttendanceHistory();
         AttendanceDate date = new AttendanceDate(LocalDate.of(2024, 12, 3));
         AttendanceTime time = new AttendanceTime(LocalTime.of(9, 50));
 
@@ -27,7 +25,7 @@ class AttendanceHistoryTest {
     @DisplayName("이미 출석 한 경우 예외가 발생한다")
     @Test
     void alreadyAttendanceTest() {
-        AttendanceHistory history = new AttendanceHistory(new HashMap<>());
+        AttendanceHistory history = new AttendanceHistory();
         AttendanceDate date = new AttendanceDate(LocalDate.of(2024, 12, 3));
         AttendanceTime time = new AttendanceTime(LocalTime.of(9, 50));
 
@@ -41,17 +39,15 @@ class AttendanceHistoryTest {
     @DisplayName("출석을 수정한다")
     @Test
     void modifyAttendanceTest() {
-        AttendanceHistory history = new AttendanceHistory(new HashMap<>(Map.of(
-                new AttendanceDate(LocalDate.of(2024, 12, 3)),
-                new AttendanceTime(LocalTime.of(11, 50))
-        )));
-
-        AttendanceDate date = new AttendanceDate(LocalDate.of(2024, 12, 3));
+        LocalDate date = LocalDate.of(2024, 12, 3);
+        AttendanceDate attendanceDate = new AttendanceDate(date);
         AttendanceTime time = new AttendanceTime(LocalTime.of(9, 50));
 
-        history.modify(date, time);
+        AttendanceHistory history = new AttendanceHistory();
+        history.add(attendanceDate, time);
 
-        assertThat(history.getHistory()).containsEntry(date, time);
+        history.modify(attendanceDate, time);
+        assertThat(history.getHistory()).containsEntry(attendanceDate, time);
     }
 
 }

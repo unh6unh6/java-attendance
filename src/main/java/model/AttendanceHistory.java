@@ -1,14 +1,15 @@
 package model;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class AttendanceHistory {
 
     private final Map<AttendanceDate, AttendanceTime> history;
 
-    public AttendanceHistory(final Map<AttendanceDate, AttendanceTime> history) {
-        this.history = history;
+    public AttendanceHistory() {
+        history = new HashMap<>();
     }
 
     public void add(final AttendanceDate date, final AttendanceTime time) {
