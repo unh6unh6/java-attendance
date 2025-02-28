@@ -3,6 +3,7 @@ package model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -39,12 +40,14 @@ class AttendanceTimeTest {
 
     @DisplayName("출석 시간과 인자로 들어온 시간의 간격을 계산한다")
     @Test
-    void calculateDurationTest() {
+    void timeTakenTest() {
         AttendanceTime time = new AttendanceTime(LocalTime.of(10, 0));
-        LocalTime compareTime = LocalTime.of(10, 30);
+        LocalTime futureTime = LocalTime.of(10, 30);
+        LocalTime pastTime = LocalTime.of(9, 30);
 
-        Duration expected = Duration.ofMinutes(30);
-
-        assertThat(time.calculateDuration(compareTime)).isEqualTo(expected);
+        assertAll(
+                () -> assertThat(time.timeTaken(futureTime)).isEqualTo(Duration.ofMinutes(+30)),
+                () -> assertThat(time.timeTaken(pastTime)).isEqualTo(Duration.ofMinutes(-30))
+        );
     }
 }

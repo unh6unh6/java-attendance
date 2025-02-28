@@ -11,7 +11,7 @@ public class AttendanceTime {
         this.time = time;
     }
 
-    public Duration calculateDuration(final LocalTime compareTime) {
+    public Duration timeTaken(final LocalTime compareTime) {
         return Duration.between(time, compareTime);
     }
 
