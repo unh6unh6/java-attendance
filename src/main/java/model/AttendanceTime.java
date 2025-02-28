@@ -1,5 +1,6 @@
 package model;
 
+import java.time.Duration;
 import java.time.LocalTime;
 
 public class AttendanceTime {
@@ -8,6 +9,10 @@ public class AttendanceTime {
     public AttendanceTime(final LocalTime time) {
         validateCampusOperatingTime(time);
         this.time = time;
+    }
+
+    public Duration calculateDuration(final LocalTime compareTime) {
+        return Duration.between(time, compareTime);
     }
 
     private void validateCampusOperatingTime(final LocalTime time) {

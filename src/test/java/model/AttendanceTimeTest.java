@@ -1,10 +1,13 @@
 package model;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.time.Duration;
 import java.time.LocalTime;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -32,5 +35,16 @@ class AttendanceTimeTest {
         assertThatThrownBy(() -> new AttendanceTime(attendanceTime))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 캠퍼스 운영 시간이 아닙니다.");
+    }
+
+    @DisplayName("출석 시간과 인자로 들어온 시간의 간격을 계산한다")
+    @Test
+    void calculateDurationTest() {
+        AttendanceTime time = new AttendanceTime(LocalTime.of(10, 0));
+        LocalTime compareTime = LocalTime.of(10, 30);
+
+        Duration expected = Duration.ofMinutes(30);
+
+        assertThat(time.calculateDuration(compareTime)).isEqualTo(expected);
     }
 }
