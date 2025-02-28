@@ -2,15 +2,14 @@ package model;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.Arrays;
 
 public enum EducationTimePolicy {
     MON(DayOfWeek.MONDAY, LocalTime.of(13, 0), LocalTime.of(18, 0)),
     TUE(DayOfWeek.TUESDAY, LocalTime.of(10, 0), LocalTime.of(18, 0)),
     WED(DayOfWeek.WEDNESDAY, LocalTime.of(10, 0), LocalTime.of(18, 0)),
     THU(DayOfWeek.THURSDAY, LocalTime.of(10, 0), LocalTime.of(18, 0)),
-    FRI(DayOfWeek.FRIDAY, LocalTime.of(10, 0), LocalTime.of(18, 0)),
-    SAT(DayOfWeek.SATURDAY, LocalTime.MIN, LocalTime.MIN),
-    SUN(DayOfWeek.SUNDAY, LocalTime.MIN, LocalTime.MIN);
+    FRI(DayOfWeek.FRIDAY, LocalTime.of(10, 0), LocalTime.of(18, 0));
 
     private final DayOfWeek dayOfWeek;
     private final LocalTime startTime;
@@ -22,4 +21,11 @@ public enum EducationTimePolicy {
         this.finishTime = finishTime;
     }
 
+    public static LocalTime getStartTime(final DayOfWeek dayOfWeek) {
+        return Arrays.stream(values())
+                .filter(value -> dayOfWeek.equals(value.dayOfWeek))
+                .findAny()
+                .orElseThrow(IllegalStateException::new)
+                .startTime;
+    }
 }
