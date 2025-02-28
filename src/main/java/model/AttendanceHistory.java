@@ -12,6 +12,9 @@ public class AttendanceHistory {
     }
 
     public void add(final AttendanceDate date, final AttendanceTime time) {
+        if (history.containsKey(date)) {
+            throw new IllegalArgumentException("[ERROR] 이미 출석 기록이 있습니다. 수정 기능을 이용해주세요.");
+        }
         history.put(date, time);
     }
 
