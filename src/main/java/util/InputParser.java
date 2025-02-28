@@ -1,4 +1,4 @@
-package model;
+package util;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -7,7 +7,7 @@ import java.time.format.DateTimeParseException;
 
 public class InputParser {
 
-    public LocalTime parseTime(final String input) {
+    public static LocalTime parseTime(final String input) {
         try {
             return LocalTime.parse(input, AttendanceDateTimeFormatter.timeFormatter);
         } catch (DateTimeParseException e) {
@@ -15,7 +15,7 @@ public class InputParser {
         }
     }
 
-    public LocalDate parseDayOfMonth(final String input) {
+    public static LocalDate parseDayOfMonth(final String input) {
         try {
             int day = Integer.parseInt(input);
             return LocalDate.of(2024, 12, day);
