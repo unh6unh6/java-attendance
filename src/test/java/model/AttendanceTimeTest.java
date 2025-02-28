@@ -38,16 +38,16 @@ class AttendanceTimeTest {
                 .hasMessage("[ERROR] 캠퍼스 운영 시간이 아닙니다.");
     }
 
-    @DisplayName("출석 시간과 인자로 들어온 시간의 간격을 계산한다")
+    @DisplayName("출석 시간이 교육 시간으로부터 얼마나 지났는지 계산한다")
     @Test
-    void timeTakenTest() {
+    void getOverDurationTest() {
         AttendanceTime time = new AttendanceTime(LocalTime.of(10, 0));
         LocalTime futureTime = LocalTime.of(10, 30);
         LocalTime pastTime = LocalTime.of(9, 30);
 
         assertAll(
-                () -> assertThat(time.timeTaken(futureTime)).isEqualTo(Duration.ofMinutes(+30)),
-                () -> assertThat(time.timeTaken(pastTime)).isEqualTo(Duration.ofMinutes(-30))
+                () -> assertThat(time.getOverDuration(futureTime)).isEqualTo(Duration.ofMinutes(-30)),
+                () -> assertThat(time.getOverDuration(pastTime)).isEqualTo(Duration.ofMinutes(+30))
         );
     }
 }

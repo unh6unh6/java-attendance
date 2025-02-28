@@ -11,8 +11,8 @@ public class AttendanceTime {
         this.time = time;
     }
 
-    public Duration timeTaken(final LocalTime compareTime) {
-        return Duration.between(time, compareTime);
+    public Duration getOverDuration(final LocalTime compareTime) {
+        return Duration.between(compareTime, time);
     }
 
     private void validateCampusOperatingTime(final LocalTime time) {
