@@ -24,7 +24,7 @@ class EducationTimePolicyTest {
         assertThat(EducationTimePolicy.getStartTime(dayOfWeek)).isEqualTo(time);
     }
 
-    @DisplayName("요일에 맞는 교육 시작 시간을 가져온다")
+    @DisplayName("캠퍼스 운영 요일이 아닐 경우 예외가 발생한다")
     @ParameterizedTest
     @CsvSource({"SATURDAY", "SUNDAY"})
     void weekendGetEducationStartTime(final DayOfWeek dayOfWeek) {
