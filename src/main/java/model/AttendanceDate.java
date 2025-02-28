@@ -1,5 +1,6 @@
 package model;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 public class AttendanceDate {
@@ -9,6 +10,10 @@ public class AttendanceDate {
     public AttendanceDate(final LocalDate date) {
         validateCampusOperatingDay(date);
         this.date = date;
+    }
+
+    public DayOfWeek getDayOfWeek() {
+        return date.getDayOfWeek();
     }
 
     public LocalDate getDate() {
