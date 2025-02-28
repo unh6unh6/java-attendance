@@ -18,6 +18,10 @@ public class AttendanceHistory {
         history.put(date, time);
     }
 
+    public void modify(final AttendanceDate date, final AttendanceTime time) {
+        history.put(date, time);
+    }
+
     public Map<AttendanceDate, AttendanceTime> getHistory() {
         return Collections.unmodifiableMap(history);
     }

@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,4 +37,21 @@ class AttendanceHistoryTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이미 출석 기록이 있습니다. 수정 기능을 이용해주세요.");
     }
+
+    @DisplayName("출석을 수정한다")
+    @Test
+    void modifyAttendanceTest() {
+        AttendanceHistory history = new AttendanceHistory(new HashMap<>(Map.of(
+                new AttendanceDate(LocalDate.of(2024, 12, 3)),
+                new AttendanceTime(LocalTime.of(11, 50))
+        )));
+
+        AttendanceDate date = new AttendanceDate(LocalDate.of(2024, 12, 3));
+        AttendanceTime time = new AttendanceTime(LocalTime.of(9, 50));
+
+        history.modify(date, time);
+
+        assertThat(history.getHistory()).containsEntry(date, time);
+    }
+
 }
