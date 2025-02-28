@@ -6,13 +6,15 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public enum AttendanceType {
-    LATE(Duration.ofMinutes(5)),
-    ABSENT(Duration.ofMinutes(30)),
-    NONE(Duration.ofMinutes(0));
+    LATE("지각", Duration.ofMinutes(5)),
+    ABSENT("결석", Duration.ofMinutes(30)),
+    NONE("출석", Duration.ofMinutes(0));
 
+    private final String name;
     private final Duration threshold;
 
-    AttendanceType(final Duration threshold) {
+    AttendanceType(final String name, final Duration threshold) {
+        this.name = name;
         this.threshold = threshold;
     }
 
@@ -26,6 +28,10 @@ public enum AttendanceType {
                 .filter(value -> !isWithinThreshold(value, duration))
                 .max(Comparator.comparing(value -> value.threshold))
                 .orElse(NONE);
+    }
+
+    public String getName() {
+        return name;
     }
 
     private static boolean isWithinThreshold(final AttendanceType value, final Duration duration) {
