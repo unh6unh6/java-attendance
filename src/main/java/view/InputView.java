@@ -6,10 +6,12 @@ public class InputView {
 
     private static final String ATTENDANCE_CHECK_CREW_NICKNAME_INPUT_GUIDE = "닉네임을 입력해 주세요.";
     private static final String ATTENDANCE_CHECK_TIME_INPUT_GUIDE = "등교 시간을 입력해 주세요.";
-    private final Scanner scanner = new Scanner(System.in);
+
+    private final Scanner scanner;
     private final InputValidator inputValidator;
 
-    public InputView(final InputValidator inputValidator) {
+    public InputView(final Scanner scanner, final InputValidator inputValidator) {
+        this.scanner = scanner;
         this.inputValidator = inputValidator;
     }
 
