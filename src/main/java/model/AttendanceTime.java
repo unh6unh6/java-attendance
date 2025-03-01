@@ -4,6 +4,8 @@ import java.time.Duration;
 import java.time.LocalTime;
 
 public class AttendanceTime {
+    public static final LocalTime DEFAULT_TIME = LocalTime.MAX;
+
     private final LocalTime time;
 
     public AttendanceTime(final LocalTime time) {
@@ -13,6 +15,10 @@ public class AttendanceTime {
 
     public Duration getOverDuration(final LocalTime compareTime) {
         return Duration.between(compareTime, time);
+    }
+
+    public LocalTime getTime() {
+        return time;
     }
 
     private void validateCampusOperatingTime(final LocalTime time) {
