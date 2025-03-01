@@ -16,11 +16,13 @@ public class AttendanceController {
     public AttendanceController(
             final CommandInputView commandInputView,
             final AttendanceCheckConsumer attendanceCheckConsumer,
-            final AttendanceModifyConsumer attendanceModifyConsumer
+            final AttendanceModifyConsumer attendanceModifyConsumer,
+            final AttendanceHistoryConsumer attendanceHistoryConsumer
     ) {
         this.commandInputView = commandInputView;
         commandByBiConsumer.put(Command.CHECK_ATTENDANCE, attendanceCheckConsumer);
         commandByBiConsumer.put(Command.MODIFY_ATTENDANCE, attendanceModifyConsumer);
+        commandByBiConsumer.put(Command.ATTENDANCE_HISTORY_BY_CREW, attendanceHistoryConsumer);
         commandByBiConsumer.put(Command.QUIT, (system, exit) -> System.exit(0));
     }
 
