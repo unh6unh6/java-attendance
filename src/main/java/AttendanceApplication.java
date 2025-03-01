@@ -1,5 +1,6 @@
 import controller.AttendanceCheckConsumer;
 import controller.AttendanceController;
+import controller.AttendanceModifyConsumer;
 import java.util.Scanner;
 import view.CommandInputView;
 import view.InputValidator;
@@ -17,11 +18,12 @@ public class AttendanceApplication {
         ResultView resultView = new ResultView();
 
         AttendanceCheckConsumer attendanceCheckConsumer = new AttendanceCheckConsumer(inputView, resultView);
-
+        AttendanceModifyConsumer attendanceModifyConsumer = new AttendanceModifyConsumer(inputView, resultView);
         // TODO : AttendanceBook 객체 생성 로직 필요
         AttendanceController controller = new AttendanceController(
                 commandInputView,
-                attendanceCheckConsumer
+                attendanceCheckConsumer,
+                attendanceModifyConsumer
         );
 
         controller.start(null);
