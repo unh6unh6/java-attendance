@@ -23,6 +23,9 @@ public class AttendanceModifyConsumer implements BiConsumer<AttendanceBook, Loca
     public void accept(final AttendanceBook attendanceBook, final LocalDate todayDate) {
         AttendanceHistory attendanceHistory = inputNicknameAndGetAttendanceHistory(attendanceBook);
         LocalDate modifyDate = InputParser.parseDayOfMonth(inputView.getAttendanceModifyDayOfMonth());
+        if (todayDate.isBefore(modifyDate)) {
+            throw new IllegalArgumentException("[ERROR] 과거의 출석 기록만 수정할 수 있습니다.");
+        }
         LocalTime modifyTime = InputParser.parseTime(inputView.getAttendanceModifyTime());
     }
 
