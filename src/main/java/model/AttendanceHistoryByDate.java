@@ -1,10 +1,9 @@
-package dto;
+package model;
 
 import static model.AttendanceTime.DEFAULT_TIME;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import model.AttendanceType;
 
 public record AttendanceHistoryByDate(
         LocalDate date, LocalTime time, AttendanceType type
