@@ -23,5 +23,7 @@ public class AttendanceApplication {
                 commandInputView,
                 attendanceCheckConsumer
         );
+
+        controller.start(null);
     }
 }

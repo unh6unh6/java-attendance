@@ -19,7 +19,7 @@ public class AttendanceController {
     ) {
         this.commandInputView = commandInputView;
         commandByBiConsumer.put(Command.CHECK_ATTENDANCE, attendanceCheckConsumer);
-        commandByBiConsumer.put(Command.QUIT, (value1, value2) -> System.exit(0));
+        commandByBiConsumer.put(Command.QUIT, (system, exit) -> System.exit(0));
     }
 
     public void start(final AttendanceBook attendanceBook) {

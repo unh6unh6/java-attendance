@@ -6,6 +6,7 @@ public class InputView {
 
     private static final String ATTENDANCE_CHECK_CREW_NICKNAME_INPUT_GUIDE = "닉네임을 입력해 주세요.";
     private static final String ATTENDANCE_CHECK_TIME_INPUT_GUIDE = "등교 시간을 입력해 주세요.";
+    private static final String ATTENDANCE_MODIFY_CREW_NICKNAME_INPUT_GUIDE = "출석을 수정하려는 크루의 닉네임을 입력해 주세요.";
 
     private final Scanner scanner;
     private final InputValidator inputValidator;
@@ -22,6 +23,11 @@ public class InputView {
 
     public String getAttendanceCheckTime() {
         System.out.println(ATTENDANCE_CHECK_TIME_INPUT_GUIDE);
+        return getInput();
+    }
+
+    public String getAttendanceModifyCrewNickname() {
+        System.out.println(ATTENDANCE_MODIFY_CREW_NICKNAME_INPUT_GUIDE);
         return getInput();
     }
 
