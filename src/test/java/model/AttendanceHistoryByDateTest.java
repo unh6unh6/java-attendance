@@ -1,11 +1,9 @@
-package dto;
+package model;
 
 import static model.AttendanceTime.DEFAULT_TIME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
-import model.AttendanceHistoryByDate;
-import model.AttendanceType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
