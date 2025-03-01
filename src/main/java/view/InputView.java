@@ -1,0 +1,31 @@
+package view;
+
+import java.util.Scanner;
+
+public class InputView {
+
+    private static final String ATTENDANCE_CHECK_CREW_NICKNAME_INPUT_GUIDE = "닉네임을 입력해 주세요.";
+    private static final String ATTENDANCE_CHECK_TIME_INPUT_GUIDE = "등교 시간을 입력해 주세요.";
+    private final Scanner scanner = new Scanner(System.in);
+    private final InputValidator inputValidator;
+
+    public InputView(final InputValidator inputValidator) {
+        this.inputValidator = inputValidator;
+    }
+
+    public String getAttendanceCheckCrewNickname() {
+        System.out.println(ATTENDANCE_CHECK_CREW_NICKNAME_INPUT_GUIDE);
+        return getInput();
+    }
+
+    public String getAttendanceCheckTime() {
+        System.out.println(ATTENDANCE_CHECK_TIME_INPUT_GUIDE);
+        return getInput();
+    }
+
+    private String getInput() {
+        String input = scanner.nextLine();
+        inputValidator.validateNullOrEmptyInput(input);
+        return input;
+    }
+}
