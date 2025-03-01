@@ -1,6 +1,7 @@
 package controller;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.function.BiConsumer;
 import model.AttendanceBook;
 import model.AttendanceHistory;
@@ -22,6 +23,7 @@ public class AttendanceModifyConsumer implements BiConsumer<AttendanceBook, Loca
     public void accept(final AttendanceBook attendanceBook, final LocalDate todayDate) {
         AttendanceHistory attendanceHistory = inputNicknameAndGetAttendanceHistory(attendanceBook);
         LocalDate modifyDate = InputParser.parseDayOfMonth(inputView.getAttendanceModifyDayOfMonth());
+        LocalTime modifyTime = InputParser.parseTime(inputView.getAttendanceModifyTime());
     }
 
     private AttendanceHistory inputNicknameAndGetAttendanceHistory(final AttendanceBook attendanceBook) {
