@@ -24,8 +24,8 @@ public class AttendanceCheckConsumer implements BiConsumer<AttendanceBook, Local
     }
 
     @Override
-    public void accept(final AttendanceBook attendanceBook, final LocalDate date) {
-        AttendanceDate attendanceDate = new AttendanceDate(date);
+    public void accept(final AttendanceBook attendanceBook, final LocalDate todayDate) {
+        AttendanceDate attendanceDate = new AttendanceDate(todayDate);
         AttendanceHistory attendanceHistory = inputNicknameAndGetAttendanceHistory(attendanceBook);
         AttendanceTime attendanceTime = inputAndGetAttendanceTime();
 
