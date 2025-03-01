@@ -43,6 +43,11 @@ public class InputView {
         return getInput();
     }
 
+    public String getAttendanceHistoryCrewNickname() {
+        System.out.println(ATTENDANCE_CHECK_CREW_NICKNAME_INPUT_GUIDE);
+        return getInput();
+    }
+
     private String getInput() {
         String input = scanner.nextLine();
         inputValidator.validateNullOrEmptyInput(input);

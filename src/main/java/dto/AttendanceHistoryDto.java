@@ -24,4 +24,5 @@ public record AttendanceHistoryDto(
                 + attendanceType.getName()
                 + ")";
     }
+
 }

@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public enum AttendanceType {
+    NONE("출석", Duration.ofMinutes(0)),
     LATE("지각", Duration.ofMinutes(5)),
-    ABSENT("결석", Duration.ofMinutes(30)),
-    NONE("출석", Duration.ofMinutes(0));
+    ABSENT("결석", Duration.ofMinutes(30));
 
     private final String name;
     private final Duration threshold;

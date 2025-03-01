@@ -13,6 +13,7 @@ public enum DismissalType {
     private static final int LATE_ABSENT_RATIO = 3;
 
     private final String name;
+
     private final int threshold;
 
     DismissalType(final String name, final int threshold) {
@@ -26,6 +27,10 @@ public enum DismissalType {
                 .filter(value -> convertedAbsentCount >= value.threshold)
                 .max(Comparator.comparing(value -> value.threshold))
                 .orElse(NONE);
+    }
+
+    public String getName() {
+        return name;
     }
 
     private static int calculateConvertedAbsentCount(final Map<AttendanceType, Integer> result) {
