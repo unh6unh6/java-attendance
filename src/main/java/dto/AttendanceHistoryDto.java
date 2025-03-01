@@ -17,4 +17,11 @@ public record AttendanceHistoryDto(
                 + attendanceType.getName()
                 + ")";
     }
+
+    public String toStringWithoutDate() {
+        return AttendanceDateTimeFormatter.formatLocalTime(time)
+                + " ("
+                + attendanceType.getName()
+                + ")";
+    }
 }

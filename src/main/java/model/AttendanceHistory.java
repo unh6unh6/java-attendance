@@ -31,9 +31,9 @@ public class AttendanceHistory {
         history.put(date, time);
     }
 
-    public void modify(final AttendanceDate date, final AttendanceTime time) {
-        attendanceDateTable.putIfAbsent(date.getDate(), date);
-        history.put(date, time);
+    public AttendanceTime modify(final AttendanceDate date, final AttendanceTime time) {
+        attendanceDateTable.put(date.getDate(), date);
+        return history.put(date, time);
     }
 
     public List<AttendanceHistoryByDate> getHistoryWithAttendanceType(final LocalDate endOfRangeDate) {
