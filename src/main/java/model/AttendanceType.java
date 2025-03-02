@@ -34,6 +34,10 @@ public enum AttendanceType {
         return name;
     }
 
+    public Duration getThreshold() {
+        return threshold;
+    }
+
     private static boolean isWithinThreshold(final AttendanceType value, final Duration duration) {
         return value.threshold.compareTo(duration) >= 0;
     }
