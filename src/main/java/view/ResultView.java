@@ -1,7 +1,9 @@
 package view;
 
 import dto.AttendanceHistoryDto;
+import dto.DismissalCrewDto;
 import java.util.List;
+import model.AttendanceType;
 import model.AttendanceTypeCountResult;
 import model.DismissalType;
 
@@ -12,6 +14,8 @@ public class ResultView {
     private static final String ATTENDANCE_HISTORY_RESULT_FORMAT = "이번 달 %s의 출석 기록입니다.";
     private static final String ATTENDANCE_TYPE_COUNT_RESULT_FORMAT = "%s: %d회";
     private static final String DISMISSAL_TYPE_FORMAT = "%s 대상자입니다.";
+    private static final String ALL_DISMISSAL_CREW_RESULT_TITLE = "제적 위험자 조회 결과";
+    private static final String DISMISSAL_CREW_RESULT_FORMAT = "- %s: 결석 %d회, 지각 %d회 (%s)";
 
     public void printAttendanceCheckResult(final AttendanceHistoryDto dto) {
         System.out.println(LINE);
@@ -39,11 +43,21 @@ public class ResultView {
         System.out.println(LINE);
     }
 
-    private void printAttendanceHistoryDto(final AttendanceHistoryDto dto) {
-        System.out.println(dto.toString());
-    }
-
     public void printDismissalType(final DismissalType dismissalType) {
         System.out.printf(DISMISSAL_TYPE_FORMAT, dismissalType.getName());
+    }
+
+    public void printAllDismissalCrew(final List<DismissalCrewDto> allDismissalCrewByOrder) {
+        System.out.println(ALL_DISMISSAL_CREW_RESULT_TITLE);
+        allDismissalCrewByOrder.forEach(dto -> System.out.printf(DISMISSAL_CREW_RESULT_FORMAT,
+                dto.nickname(),
+                dto.typeCountResult().get(AttendanceType.ABSENT),
+                dto.typeCountResult().get(AttendanceType.LATE),
+                dto.dismissalType().getName())
+        );
+    }
+
+    private void printAttendanceHistoryDto(final AttendanceHistoryDto dto) {
+        System.out.println(dto.toString());
     }
 }
