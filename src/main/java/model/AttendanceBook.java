@@ -20,14 +20,14 @@ public class AttendanceBook {
         return attendanceBook.get(nickname);
     }
 
-    public List<DismissalCrewDto> getAllDismissalCrew(final LocalDate todayDate) {
+    public List<DismissalCrewDto> getAllDismissalCrewByOrder(final LocalDate todayDate) {
         return attendanceBook.entrySet().stream()
-                .map(entry -> Map.entry(
-                        entry.getKey(),
+                .map(entry -> Map.entry(entry.getKey(),
                         AttendanceTypeCountResult.from(
                                 entry.getValue().getHistoryWithAttendanceType(todayDate)).typeResult()))
                 .map(entry -> new DismissalCrewDto(
                         entry.getKey(), entry.getValue(), DismissalType.from(entry.getValue())))
+                .sorted(DismissalCrewSortPolicy.getComparator())
                 .toList();
     }
 }

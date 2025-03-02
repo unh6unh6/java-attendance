@@ -5,20 +5,22 @@ import java.util.Comparator;
 import java.util.Map;
 
 public enum DismissalType {
-    WARNING("경고", 2),
-    COUNSEL("면담", 3),
-    DISMISSAL("제적", 6),
-    NONE("해당없음", 0);
+    WARNING("경고", 2, 2),
+    COUNSEL("면담", 3, 1),
+    DISMISSAL("제적", 6, 0),
+    NONE("해당없음", 0, 3);
 
     private static final int LATE_ABSENT_RATIO = 3;
 
     private final String name;
 
     private final int threshold;
+    private final int priorityOrder;
 
-    DismissalType(final String name, final int threshold) {
+    DismissalType(final String name, final int threshold, final int priorityOrder) {
         this.name = name;
         this.threshold = threshold;
+        this.priorityOrder = priorityOrder;
     }
 
     public static DismissalType from(final Map<AttendanceType, Integer> result) {
@@ -31,6 +33,10 @@ public enum DismissalType {
 
     public String getName() {
         return name;
+    }
+
+    public int getPriorityOrder() {
+        return priorityOrder;
     }
 
     private static int calculateConvertedAbsentCount(final Map<AttendanceType, Integer> result) {

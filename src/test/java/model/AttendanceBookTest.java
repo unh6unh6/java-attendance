@@ -46,7 +46,7 @@ class AttendanceBookTest {
 //- 짱수: 결석 0회, 지각 6회 (경고)
     @DisplayName("모든 제적 위험자 정보를 가져온다")
     @Test
-    void getAllDismissalCrewTest() {
+    void getAllDismissalCrewByOrderTest() {
         AttendanceHistory bingteeHistory = AttendanceHistoryFactory.make(Stream.of(
                 makeDateTimeByAttendanceType(2, AttendanceType.ABSENT),
                 makeDateTimeByAttendanceType(3, AttendanceType.ABSENT),
@@ -110,7 +110,7 @@ class AttendanceBookTest {
                 new DismissalCrewDto("짱수", makeTypeCountResult(0, 6, 1), DismissalType.WARNING)
         );
 
-        assertThat(attendanceBook.getAllDismissalCrew(baseDate)).containsExactlyInAnyOrderElementsOf(expected);
+        assertThat(attendanceBook.getAllDismissalCrewByOrder(baseDate)).containsExactlyElementsOf(expected);
     }
 
     private static LocalDateTime makeDateTimeByAttendanceType(final int day, final AttendanceType type) {
