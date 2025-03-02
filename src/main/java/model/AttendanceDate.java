@@ -2,6 +2,7 @@ package model;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class AttendanceDate {
 
@@ -24,5 +25,19 @@ public class AttendanceDate {
         if (!CampusOperatingPolicy.isOperatingDate(date)) {
             throw new IllegalArgumentException("[ERROR] 등교일이 아닙니다.");
         }
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final AttendanceDate that = (AttendanceDate) o;
+        return Objects.equals(date, that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(date);
     }
 }

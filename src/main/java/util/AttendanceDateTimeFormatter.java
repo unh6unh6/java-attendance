@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 public class AttendanceDateTimeFormatter {
 
+    public static final DateTimeFormatter csvDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM월 dd일 E요일");
     public static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 

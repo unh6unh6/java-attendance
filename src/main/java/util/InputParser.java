@@ -23,4 +23,12 @@ public class InputParser {
             throw new IllegalArgumentException("[ERROR] 올바르지 않은 날짜(일) 입력 형식입니다.");
         }
     }
+
+    public static LocalDate parseCsvDate(final String input) {
+        try {
+            return LocalDate.parse(input, AttendanceDateTimeFormatter.csvDateFormatter);
+        } catch (NumberFormatException | DateTimeException e) {
+            throw new IllegalArgumentException("[ERROR] 올바르지 않은 날짜(일) 입력 형식입니다.");
+        }
+    }
 }

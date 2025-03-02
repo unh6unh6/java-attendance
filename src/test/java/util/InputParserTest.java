@@ -51,4 +51,22 @@ class InputParserTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 올바르지 않은 날짜(일) 입력 형식입니다.");
     }
+
+    @DisplayName("yyyy-MM-dd 형식의 문자열을 LocalDate로 변환한다")
+    @Test
+    void csvDateParseTest() {
+        assertThat(inputParser.parseCsvDate("2024-12-13"))
+                .hasYear(2024)
+                .hasMonth(Month.DECEMBER)
+                .hasDayOfMonth(13);
+    }
+
+    @DisplayName("yyyy-MM-dd 형식이 올바르지 않으면 예외가 발생한다")
+    @ParameterizedTest
+    @ValueSource(strings = {"2024/12/13", "2024년 12월 13일"})
+    void wrongCsvDateFormatParseTest(final String input) {
+        assertThatThrownBy(() -> inputParser.parseCsvDate(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 올바르지 않은 날짜(일) 입력 형식입니다.");
+    }
 }

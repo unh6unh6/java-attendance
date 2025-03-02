@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -68,5 +69,19 @@ public class AttendanceHistory {
                         AttendanceDate::getDate,
                         attendanceDate -> attendanceDate)
                 );
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final AttendanceHistory that = (AttendanceHistory) o;
+        return Objects.equals(history, that.history);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(history);
     }
 }
