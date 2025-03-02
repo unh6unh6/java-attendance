@@ -15,15 +15,16 @@ public class AttendanceController {
 
     public AttendanceController(
             final CommandInputView commandInputView,
-            final AttendanceCheckConsumer attendanceCheckConsumer,
-            final AttendanceModifyConsumer attendanceModifyConsumer,
-            final AttendanceHistoryConsumer attendanceHistoryConsumer
+            final BiConsumer<AttendanceBook, LocalDate>[] consumers
     ) {
         this.commandInputView = commandInputView;
-        commandByBiConsumer.put(Command.CHECK_ATTENDANCE, attendanceCheckConsumer);
-        commandByBiConsumer.put(Command.MODIFY_ATTENDANCE, attendanceModifyConsumer);
-        commandByBiConsumer.put(Command.ATTENDANCE_HISTORY_BY_CREW, attendanceHistoryConsumer);
-        commandByBiConsumer.put(Command.QUIT, (system, exit) -> System.exit(0));
+        commandByBiConsumer.putAll(Map.of(
+                Command.CHECK_ATTENDANCE, consumers[0],
+                Command.MODIFY_ATTENDANCE, consumers[1],
+                Command.ATTENDANCE_HISTORY_BY_CREW, consumers[2],
+                Command.CHECK_DISMISSAL_CREW, consumers[3],
+                Command.QUIT, (system, exit) -> System.exit(0)
+        ));
     }
 
     public void start(final AttendanceBook attendanceBook) {
