@@ -19,6 +19,7 @@ public class InputView {
     }
 
     public String getAttendanceCheckCrewNickname() {
+        System.out.println();
         System.out.println(ATTENDANCE_CHECK_CREW_NICKNAME_INPUT_GUIDE);
         return getInput();
     }
@@ -29,6 +30,7 @@ public class InputView {
     }
 
     public String getAttendanceModifyCrewNickname() {
+        System.out.println();
         System.out.println(ATTENDANCE_MODIFY_CREW_NICKNAME_INPUT_GUIDE);
         return getInput();
     }
@@ -44,6 +46,7 @@ public class InputView {
     }
 
     public String getAttendanceHistoryCrewNickname() {
+        System.out.println();
         System.out.println(ATTENDANCE_CHECK_CREW_NICKNAME_INPUT_GUIDE);
         return getInput();
     }

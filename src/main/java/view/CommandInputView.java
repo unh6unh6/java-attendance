@@ -24,7 +24,7 @@ public class CommandInputView {
     }
 
     public String getCommand(final LocalDate date) {
-        System.out.printf(WELCOME_MESSAGE_FORMAT + LINE, AttendanceDateTimeFormatter.formatLocalDate(date));
+        System.out.printf(LINE + WELCOME_MESSAGE_FORMAT + LINE, AttendanceDateTimeFormatter.formatLocalDate(date));
         System.out.println(COMMAND_INPUT_GUIDE);
         return getInput();
     }

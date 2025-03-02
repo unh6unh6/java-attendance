@@ -1,12 +1,13 @@
 package model;
 
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public record AttendanceTypeCountResult(
-        Map<AttendanceType, Integer> typeResult
+        EnumMap<AttendanceType, Integer> typeResult
 ) {
 
     public static AttendanceTypeCountResult from(
@@ -16,7 +17,7 @@ public record AttendanceTypeCountResult(
         histories.stream()
                 .map(AttendanceHistoryByDate::type)
                 .forEach(value -> typeResult.compute(value, (key, val) -> val + 1));
-        return new AttendanceTypeCountResult(typeResult);
+        return new AttendanceTypeCountResult(new EnumMap<>(typeResult));
     }
 
     private static Map<AttendanceType, Integer> getInitialTypeResult() {
