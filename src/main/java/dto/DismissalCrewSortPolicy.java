@@ -1,9 +1,8 @@
-package model;
+package dto;
 
 import static model.AttendanceType.ABSENT;
 import static model.AttendanceType.LATE;
 
-import dto.DismissalCrewDto;
 import java.util.Comparator;
 
 public enum DismissalCrewSortPolicy {
