@@ -3,6 +3,7 @@ package model;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Objects;
+import model.policy.CampusOperatingPolicy;
 
 public class AttendanceTime {
     public static final LocalTime DEFAULT_TIME = LocalTime.MAX;

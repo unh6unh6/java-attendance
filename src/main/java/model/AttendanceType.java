@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Comparator;
+import model.policy.EducationTimePolicy;
 
 public enum AttendanceType {
     NONE("출석", Duration.ofMinutes(0)),

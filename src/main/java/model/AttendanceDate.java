@@ -3,6 +3,7 @@ package model;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Objects;
+import model.policy.CampusOperatingPolicy;
 
 public class AttendanceDate {
 

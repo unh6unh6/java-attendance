@@ -1,8 +1,9 @@
-package model;
+package model.policy;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import model.Holiday;
 
 public class CampusOperatingPolicy {
 
