@@ -22,8 +22,7 @@ public class AttendanceController {
                 Command.CHECK_ATTENDANCE, consumers[0],
                 Command.MODIFY_ATTENDANCE, consumers[1],
                 Command.ATTENDANCE_HISTORY_BY_CREW, consumers[2],
-                Command.CHECK_DISMISSAL_CREW, consumers[3],
-                Command.QUIT, (system, exit) -> System.exit(0)
+                Command.CHECK_DISMISSAL_CREW, consumers[3]
         ));
     }
 
@@ -31,6 +30,9 @@ public class AttendanceController {
         while (true) {
             LocalDate todayDate = getTodayDate();
             Command command = Command.from(commandInputView.getCommand(todayDate));
+            if (command.equals(Command.QUIT)) {
+                return;
+            }
             commandByBiConsumer.get(command).accept(attendanceBook, todayDate);
         }
     }
