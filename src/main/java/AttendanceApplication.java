@@ -4,6 +4,7 @@ import controller.AttendanceHistoryConsumer;
 import controller.AttendanceModifyConsumer;
 import controller.DismissalCrewCheckConsumer;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.BiConsumer;
@@ -29,20 +30,20 @@ public class AttendanceApplication {
         InputView inputView = new InputView(scanner, inputValidator);
         ResultView resultView = new ResultView();
 
-        BiConsumer<AttendanceBook, LocalDate>[] consumers = createConsumers(inputView, resultView);
+        List<BiConsumer<AttendanceBook, LocalDate>> consumers = createConsumers(inputView, resultView);
         return new AttendanceController(commandInputView, consumers);
     }
 
-    private static BiConsumer<AttendanceBook, LocalDate>[] createConsumers(
+    private static List<BiConsumer<AttendanceBook, LocalDate>> createConsumers(
             final InputView inputView,
             final ResultView resultView
     ) {
-        return new BiConsumer[]{
+        return new ArrayList<>(List.of(
                 new AttendanceCheckConsumer(inputView, resultView),
                 new AttendanceModifyConsumer(inputView, resultView),
                 new AttendanceHistoryConsumer(inputView, resultView),
                 new DismissalCrewCheckConsumer(resultView)
-        };
+        ));
     }
 
     private static AttendanceBook loadAttendanceBook() {

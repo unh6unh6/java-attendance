@@ -2,6 +2,7 @@ package controller;
 
 import java.time.LocalDate;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import model.AttendanceBook;
@@ -15,14 +16,14 @@ public class AttendanceController {
 
     public AttendanceController(
             final CommandInputView commandInputView,
-            final BiConsumer<AttendanceBook, LocalDate>[] consumers
+            final List<BiConsumer<AttendanceBook, LocalDate>> consumers
     ) {
         this.commandInputView = commandInputView;
         commandByBiConsumer.putAll(Map.of(
-                Command.CHECK_ATTENDANCE, consumers[0],
-                Command.MODIFY_ATTENDANCE, consumers[1],
-                Command.ATTENDANCE_HISTORY_BY_CREW, consumers[2],
-                Command.CHECK_DISMISSAL_CREW, consumers[3]
+                Command.CHECK_ATTENDANCE, consumers.removeFirst(),
+                Command.MODIFY_ATTENDANCE, consumers.removeFirst(),
+                Command.ATTENDANCE_HISTORY_BY_CREW, consumers.removeFirst(),
+                Command.CHECK_DISMISSAL_CREW, consumers.removeFirst()
         ));
     }
 
