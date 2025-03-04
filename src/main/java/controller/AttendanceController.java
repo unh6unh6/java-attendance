@@ -40,6 +40,5 @@ public class AttendanceController {
 
     private LocalDate getTodayDate() {
         return LocalDate.of(2024, 12, 13);
-        //return LocalDate.now();
     }
 }
